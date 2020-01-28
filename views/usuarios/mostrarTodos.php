@@ -9,19 +9,11 @@
 </head>
 
 <body>
-    <?php
+    <div><p><?php
 
-    use App\Controllers\UsuarioController;
+echo $listado;
+?></p></div>
     
-    require '../App/Controllers/UsuarioController.php';
-
-    $controlador = new UsuarioController();
-    $controlador->mostrarTodosUsuarios();
-    $controlador->crearUsuario();
-
-
-
-    ?>
 </body>
 
 </html>
