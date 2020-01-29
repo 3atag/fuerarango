@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Models\Paciente;
 
 class PacienteController {
@@ -19,9 +20,6 @@ class PacienteController {
     }
 
     public function mostrarTodosPacientes () {
-
-        // Recibo datos del modelo
-        require '../App/Models/Paciente.php';
 
         // Instancio el modelo y ejecuto el metodo correspondiente
         $paciente = new Paciente();

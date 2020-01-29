@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-require_once 'BaseElement.php';
-
 class Internacion extends BaseElement
 
 {

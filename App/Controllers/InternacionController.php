@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Models\Internacion;
 
 class InternacionController {
@@ -19,9 +20,6 @@ class InternacionController {
     }
 
     public function mostrarTodosInternacion () {
-
-        // Recibo datos del modelo
-        require '../App/Models/Internacion.php';
 
         // Instancio el modelo y ejecuto el metodo correspondiente
         $Internacion = new Internacion();

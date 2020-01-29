@@ -12,6 +12,8 @@
     <p>hola</p>
     <?php
 
+    require_once '../vendor/autoload.php';
+
     use App\Controllers\{PacienteController, InternacionController};
 
     require '../App/Controllers/PacienteController.php';
