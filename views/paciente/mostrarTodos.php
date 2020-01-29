@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div><p><?php
+    <div><h1>Listado de pacientes</h1><p><?php
 
 echo $listado;
 ?></p></div>

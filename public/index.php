@@ -9,15 +9,42 @@
 </head>
 
 <body>
+    <p>hola</p>
     <?php
 
-    use App\Controllers\UsuarioController;
-    
-    require '../App/Controllers/UsuarioController.php';
+    use App\Controllers\{PacienteController, InternacionController};
 
-    $controlador = new UsuarioController();
-    $controlador->mostrarTodosUsuarios();
-    $controlador->crearUsuario();
+    require '../App/Controllers/PacienteController.php';
+    require '../App/Controllers/InternacionController.php';
+
+    if (isset($_GET['controller']) && class_exists($_GET['controller'])) {
+
+        $nombre_controlador = $_GET['controller'];
+
+        $controlador = new $nombre_controlador();
+
+        // Si el metodo esta seteado y existe dentro del controlador
+        if (isset($_GET['action']) && method_exists($controlador, $_GET['action'])) {
+
+            // ejecuto el metodo
+            $action = $_GET['action'];
+            $controlador->$action();
+
+        } elseif (!isset($_GET['action'])) {
+
+            echo '';
+
+        } else {
+
+            echo 'El parametro action ingresado no es valido';
+        }
+
+    } elseif (!isset($_GET['controller'])) {
+
+        echo '';
+    } else {
+        echo 'El parametro controller ingresado no es valido';
+    }
 
 
 

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+require_once 'BaseElement.php';
 
-class Paciente
+
+class Paciente extends BaseElement
 {
 
     private $id;
@@ -26,10 +28,5 @@ class Paciente
 
         return $this;
     }
-    // Extrae todos los registros de la base de datos
-    public function conseguirTodos()
-    {
-
-        return 'sacando todos los paciente';
-    }
+   
 }
