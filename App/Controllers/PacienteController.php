@@ -1,11 +1,12 @@
 <?php
 
+namespace App\Controllers;
 
 use App\Models\Paciente;
 
 class PacienteController {
 
-    public function register () {
+    public function add () {
 
         require '../views/paciente/crear.php';
 
@@ -33,7 +34,7 @@ class PacienteController {
         // Instancio el modelo y ejecuto el metodo correspondiente
         $paciente = new Paciente();
 
-        $listado = $paciente->conseguirTodos();
+        $listado = $paciente->conseguirTodos('pacientes');
 
         // Envio a la vistas
         require '../views/paciente/mostrarTodos.php';
