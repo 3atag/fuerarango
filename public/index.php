@@ -1,23 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-
-<body>
-    <p>hola</p>
     <?php
 
     require_once '../vendor/autoload.php';
 
+    require_once '../views/templates/header.php';
+
     use App\Controllers\{PacienteController, InternacionController};
+    use Aura\Router\RouterContainer;
 
     require '../App/Controllers/PacienteController.php';
     require '../App/Controllers/InternacionController.php';
+
+    $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
+        $_SERVER,
+        $_GET,
+        $_POST,
+        $_COOKIE,
+        $_FILES
+    );
+
+    $routerContainer = new RouterContainer();
+
+    $map = $routerContainer->getMap();
+
+    $map->get('index', '/fuerarango/', 'index.php');
+    $map->get('hola', '/fuerarango/paciente/register', 'hola.php');
+
+    $matcher = $routerContainer->getMatcher();
+
+    $route = $matcher->match($request);
+
+    if(!$route) {
+        
+        echo 'no route';
+
+    } else {
+        var_dump($route->handler);
+    }
+    
 
     if (isset($_GET['controller']) && class_exists($_GET['controller'])) {
 
@@ -31,26 +51,18 @@
             // ejecuto el metodo
             $action = $_GET['action'];
             $controlador->$action();
-
         } elseif (!isset($_GET['action'])) {
 
             echo '';
-
         } else {
 
             echo 'El parametro action ingresado no es valido';
         }
-
     } elseif (!isset($_GET['controller'])) {
 
         echo '';
     } else {
         echo 'El parametro controller ingresado no es valido';
     }
-
-
-
+    require_once '../views/templates/footer.php'
     ?>
-</body>
-
-</html>

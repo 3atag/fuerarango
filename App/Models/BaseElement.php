@@ -2,21 +2,27 @@
 
 namespace App\Models;
 
+use Database;
+
+require_once '../config/Database.php';
+
 class BaseElement
-
 {
-    // Extrae todos los registros de la base de datos
-    public function conseguirTodos()
+
+    protected $con;
+
+    // Ejecuto la conexion a la base
+    public function __construct()
     {
+        $this->con = Database::connect();
+    }
 
-        return 'sacando todos los paciente';
-    } 
-   
+    // Extrae todos los registros de la base de datos
+    public function conseguirTodos($tabla)
+    {
+        $query = $this->con->query("SELECT * FROM $tabla ORDER BY idInternacion DESC");
+
+        return $query;
+
+    }
 }
-
-
-
-
-
-
- 

@@ -1,24 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <form action="" method="post">
+<h4>Agregar Paciente</h4>
 
-    <label for="">Nombre</label>
-    <input type="text" name="nombre" id="nombre">
+    <form action="index.php?controller=PacienteController&action=save" method="post">
 
-    <label for="">Beneficio</label>
-    <input type="text" name="beneficio" id="beneficio">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" class="form-control">
+        </div>
 
-    <label for="">DNI</label>
-    <input type="text" name="dni" id="dni">
+        <div class="form-group">
+            <label for="beneficio">Beneficio</label>
+            <input type="text" name="beneficio" id="beneficio" class="form-control">
+        </div>
 
-    <input type="submit" value="Agregar">
+        <div class="form-group">
+            <label for="dni">DNI</label>
+            <input type="text" name="dni" id="dni" class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Agregar" class="btn btn-primary">
+        </div>
+
     </form>
-</body>
-</html>

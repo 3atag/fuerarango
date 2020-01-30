@@ -5,17 +5,26 @@ use App\Models\Paciente;
 
 class PacienteController {
 
-    public function crearPaciente () {
+    public function register () {
 
         require '../views/paciente/crear.php';
 
     }
 
-    public function editarPaciente () {
+    public function save () {
+
+        if (isset($_POST)) {
+            var_dump($_POST);
+        }
+
+      
+    }
+
+    public function edit () {
 
     }
 
-    public function desactivarPaciente () {
+    public function off () {
 
     }
 

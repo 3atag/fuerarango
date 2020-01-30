@@ -1,34 +1,36 @@
 <?php
 
-
 use App\Models\Internacion;
 
 class InternacionController {
 
-    public function crearInternacion () {
+    public function register () {
 
         require '../views/internacion/crear.php';
 
     }
 
-    public function editarInternacion () {
+    public function edit () {
 
     }
 
-    public function desactivarInternacion () {
+    public function off () {
 
     }
 
-    public function mostrarTodosInternacion () {
+    public function viewAll () {
 
         // Instancio el modelo y ejecuto el metodo correspondiente
         $Internacion = new Internacion();
 
-        $listado = $Internacion->conseguirTodos();
+        $internaciones = $Internacion->showAll();
 
         // Envio a la vistas
         require '../views/internacion/mostrarTodos.php';
         
     }
+    
+
+
 
 }

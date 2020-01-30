@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 class Internacion extends BaseElement
 
 {
@@ -11,6 +12,13 @@ class Internacion extends BaseElement
     private $fechaIngreso;
     private $fechaEgreso;
     private $activo;
+
+    public function __construct(
+
+    )
+    {
+        parent::__construct();
+    }
 
 
   
@@ -78,10 +86,15 @@ class Internacion extends BaseElement
         return $this;
     }
 
-      // Extrae todos los registros de la base de datos
-      public function conseguirTodos()
-      {
-  
-          return 'sacando todos los paciente';
-      }
+    // Extrae todos los registros de la base de datos
+    public function showAll ()
+    {
+        $query = $this->con->query("SELECT * FROM internaciones INNER JOIN pacientes ON
+        internaciones.idDePaciente = pacientes.idPaciente
+          ORDER BY internaciones.fechaIngreso DESC");
+
+        return $query;
+
+    }
+
 }

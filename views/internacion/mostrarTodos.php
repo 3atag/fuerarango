@@ -1,19 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
+    <div>
 
-<body>
-    <div><h1>Listado de internaciones</h1><p><?php
+        <h4>Listado de internaciones</h4>
 
-echo $listado;
-?></p></div>
-    
-</body>
+        <table>
 
-</html>
+            <?php while ($internacion = $internaciones->fetch_object()) : ?>
+          
+                <tr>
+                    <td><?php echo $internacion->beneficio ?></td>
+                    <td><?php echo $internacion->nombre ?></td>                    
+                    <td><?php echo $internacion->fechaIngreso ?></td>
+                    <td><?php echo $internacion->fechaEgreso ?></td>
+                </tr>
+
+            <?php endwhile ?>
+
+        </table>
+    </div>
+
