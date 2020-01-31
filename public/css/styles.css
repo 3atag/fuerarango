@@ -1,0 +1,13 @@
+
+
+div .agregar_internacion h1 span {
+    font-size: 1rem !important;
+}
+
+div .agregar_internacion h4 {
+    font-size: .9rem !important;
+}
+
+div .agregar_internacion a {
+    text-decoration: none;
+}

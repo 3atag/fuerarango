@@ -1,24 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <form action="" method="post">
+<div class="crear_internacion">
+    <h4>Agregar Internacion</h4>
 
-    <label for="">Paciente</label>
-    <input type="text" name="nombre" id="nombre">
+    <form action="save" method="post">
 
-    <label for="">Fecha ingreso</label>
-    <input type="datetime" name="fechaIng" id="fechaIng">
+        <div class="form-group">
+            <label for="paciente">Paciente</label>
+            <div class="input-group">
 
-    <label for="">Fecha Egreso</label>
-    <input type="datetime" name="fechaEgr" id="fechaEgr">
+                <input type="number" name="paciente" id="paciente" class="form-control">
 
-    <input type="submit" value="Agregar">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modalAddPaciente">Seleccionar</button>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+            <label for="fechaIng">Fecha ingreso</label>
+            <input type="datetime-local" name="fechaIng" id="fechaIng" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="fechaEgr">Fecha Egreso</label>
+            <input type="datetime-local" name="fechaEgr" id="fechaEgr" class="form-control">
+        </div>
+
+        <input type="submit" value="Agregar" class="btn btn-primary">
     </form>
-</body>
-</html>
+</div>
+
+<div class="modal fade" id="modalAddPaciente" tabindex="-1" role="dialog" aria-labelledby="modalAddPaciente" aria-hidden="true">
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                Seleccionar paciente
+            </h5>
+            <button class="close" data-dismiss="modal" aria-label="Cerrar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+        <div>
+    <h1>Listado de pacientes</h1>
+    <p><?php echo $listado; ?></p>
+</div>
+        </div>
+
+        
+    </div>
+</div>
+
+</div>

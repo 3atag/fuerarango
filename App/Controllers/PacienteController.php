@@ -29,15 +29,16 @@ class PacienteController {
 
     }
 
-    public function mostrarTodosPacientes () {
+    public function viewAll () {
 
         // Instancio el modelo y ejecuto el metodo correspondiente
         $paciente = new Paciente();
 
-        $listado = $paciente->conseguirTodos('pacientes');
+        $listado = $paciente->showAll();       
 
         // Envio a la vistas
-        require '../views/paciente/mostrarTodos.php';
+        
+        require '../views/internacion/crear.php';
         
     }
 

@@ -26,9 +26,19 @@
         'action'=>'viewAll'
     ]);
 
-    $map->get('hola', '/fuerarango/paciente/add', [
+    $map->get('addPaciente', '/fuerarango/pacientes/nuevo', [
         'controller'=>'App\Controllers\PacienteController',
         'action'=>'add'
+    ]);
+
+    $map->get('addInternacion', '/fuerarango/internaciones/nueva', [
+        'controller'=>'App\Controllers\InternacionController',
+        'action'=>'add'
+    ]);
+
+    $map->post('saveInternacion', '/fuerarango/internaciones/save', [
+        'controller'=>'App\Controllers\InternacionController',
+        'action'=>'save'
     ]);
 
     $matcher = $routerContainer->getMatcher();

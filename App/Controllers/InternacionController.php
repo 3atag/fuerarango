@@ -6,10 +6,32 @@ use App\Models\Internacion;
 
 class InternacionController {
 
-    public function register () {
+    public function add () {
 
         require '../views/internacion/crear.php';
 
+    }
+
+    public function save () {
+
+        if(isset ($_POST)){
+
+            $internacion = new Internacion;
+
+            $internacion->setIdDePaciente($_POST['paciente']);
+            $internacion->setFechaIngreso($_POST['fechaIng']);
+            $internacion->setFechaEgreso($_POST['fechaEgr']);
+
+            if ($internacion->save()) {
+                header('Location:../');
+
+            } else {
+                var_dump($internacion->db->error);
+            }
+
+                     
+
+        }
     }
 
     public function edit () {
