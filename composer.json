@@ -7,6 +7,7 @@
 
     "require": {
         "laminas/laminas-diactoros": "^2.2",
-        "aura/router": "^3.1"
+        "aura/router": "^3.1",
+        "illuminate/database": "^6.15"
     }
 }

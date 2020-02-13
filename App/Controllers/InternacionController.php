@@ -2,13 +2,18 @@
 
 namespace App\Controllers;
 
-use App\Models\Internacion;
+use App\Models\{Internacion, Paciente};
 
 class InternacionController {
 
     public function add () {
 
+        $paciente = new Paciente();
+
+        $pacientes = $paciente->showAll();          
+
         require '../views/internacion/crear.php';
+        require '../views/internacion/modalPacientes.php';
 
     }
 
@@ -16,9 +21,9 @@ class InternacionController {
 
         if(isset ($_POST)){
 
-            $internacion = new Internacion;
+            $internacion = new Internacion;            
 
-            $internacion->setIdDePaciente($_POST['paciente']);
+            $internacion->setIdDePaciente($_POST['id_paciente']);
             $internacion->setFechaIngreso($_POST['fechaIng']);
             $internacion->setFechaEgreso($_POST['fechaEgr']);
 
@@ -26,7 +31,7 @@ class InternacionController {
                 header('Location:../');
 
             } else {
-                var_dump($internacion->db->error);
+                var_dump('Ha ocurrido un error al intentar guardar el registro');
             }
 
                      

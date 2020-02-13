@@ -15,7 +15,20 @@ class PacienteController {
     public function save () {
 
         if (isset($_POST)) {
-            var_dump($_POST);
+
+            $paciente = new Paciente;
+
+            $paciente->setNombre($_POST['nombre']);
+            $paciente->setBeneficio($_POST['beneficio']);
+            $paciente->setDni($_POST['dni']);
+
+
+            if ($paciente->save()) {
+                header('Location:../');
+
+            } else {
+                var_dump('Ha ocurrido un error al intentar guardar el registro');
+            }
         }
 
       
@@ -34,12 +47,13 @@ class PacienteController {
         // Instancio el modelo y ejecuto el metodo correspondiente
         $paciente = new Paciente();
 
-        $listado = $paciente->showAll();       
+        $pacientes = $paciente->showAll();       
 
         // Envio a la vistas
         
-        require '../views/internacion/crear.php';
+        require '../views/paciente/mostrarTodos.php';
         
     }
+ 
 
 }

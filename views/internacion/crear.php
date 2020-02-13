@@ -4,13 +4,17 @@
     <form action="save" method="post">
 
         <div class="form-group">
+
+        <input type="hidden" name="id_paciente" id="id_paciente" class="form-control">
+
+        
             <label for="paciente">Paciente</label>
             <div class="input-group">
 
-                <input type="number" name="paciente" id="paciente" class="form-control">
+                <input type="text" name="nom_paciente" id="nom_paciente" class="form-control" required>
 
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modalAddPaciente">Seleccionar</button>
+                    <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modalAddPaciente" id="btnSeleccionar">Seleccionar</button>
                 </div>
             </div>
 
@@ -19,41 +23,15 @@
 
         <div class="form-group">
             <label for="fechaIng">Fecha ingreso</label>
-            <input type="datetime-local" name="fechaIng" id="fechaIng" class="form-control">
+            <input type="datetime-local" name="fechaIng" id="fechaIng" class="form-control" required>
         </div>
 
         <div class="form-group">
             <label for="fechaEgr">Fecha Egreso</label>
-            <input type="datetime-local" name="fechaEgr" id="fechaEgr" class="form-control">
+            <input type="datetime-local" name="fechaEgr" id="fechaEgr" class="form-control" required>
         </div>
 
         <input type="submit" value="Agregar" class="btn btn-primary">
+        <a href="/fuerarango/"><button type="button" class="btn btn-secondary">Cancelar</button></a>
     </form>
-</div>
-
-<div class="modal fade" id="modalAddPaciente" tabindex="-1" role="dialog" aria-labelledby="modalAddPaciente" aria-hidden="true">
-
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">
-                Seleccionar paciente
-            </h5>
-            <button class="close" data-dismiss="modal" aria-label="Cerrar">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-
-        <div class="modal-body">
-
-        <div>
-    <h1>Listado de pacientes</h1>
-    <p><?php echo $listado; ?></p>
-</div>
-        </div>
-
-        
-    </div>
-</div>
-
 </div>

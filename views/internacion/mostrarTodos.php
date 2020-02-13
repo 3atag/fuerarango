@@ -2,9 +2,20 @@
 
     <div class="row ">
 
-        <div class="col">
+        <div class="col-6">
+
             <a href="internaciones/nueva">
-                <h1>+</h1>
+                <i class="fas fa-plus-square fa-3x"></i>
+            </a>
+        </div>
+        <div class="col botonera">
+
+            <a href="pacientes/nuevo" class="btn btn-secondary">
+                <i class="fas fa-user-injured fa-lg"></i>
+            </a>
+
+            <a href="practicas" class="btn btn-secondary">
+                <i class="fas fa-clinic-medical fa-lg"></i>
             </a>
         </div>
 

@@ -1,7 +1,7 @@
 <div class="agregar_paciente">
 <h4>Agregar Paciente</h4>
 
-    <form action="index.php?controller=PacienteController&action=save" method="post">
+    <form action="save" method="post">
 
         <div class="form-group">
             <label for="nombre">Nombre</label>
@@ -19,7 +19,13 @@
         </div>
         <div class="form-group">
             <input type="submit" value="Agregar" class="btn btn-primary">
+
+            <a href="/fuerarango/"><button type="button" class="btn btn-secondary">Cancelar</button></a>
         </div>
+
+        
+
+        
 
     </form>
     </div>

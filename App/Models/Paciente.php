@@ -76,4 +76,14 @@ class Paciente
         return $query;
     }
 
+    // Extrae todos los registros de la base de datos
+    public function save () {
+         
+        $sql = "INSERT INTO pacientes VALUES(null,'{$this->getNombre()}','{$this->getBeneficio()}',{$this->getDni()},1)";
+
+        $save = $this->db->query($sql);
+
+        return $save;
+    }
+
 }

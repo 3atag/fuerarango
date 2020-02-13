@@ -9,11 +9,10 @@ use Database;
 class Internacion
 
 {
-    private $id;
+    private $idInternacion;
     private $idDePaciente;
     private $fechaIngreso;
     private $fechaEgreso;
-    private $activo;
 
     private $db;
     
@@ -23,12 +22,12 @@ class Internacion
 
   
     public function getId() {
-        return $this->id;
+        return $this->idInternacion;
     }
 
    
     public function setId($id) {
-        $this->id = $id;
+        $this->idInternacion = $id;
         return $this;
     }
 
@@ -65,19 +64,11 @@ class Internacion
         return $this;
     }
 
-    public function getActivo() {
-        return $this->activo;
-    }
- 
-    public function setActivo($activo) {
-        $this->activo = $activo;
-        return $this;
-    }    
-
+    
      // Extrae todos los registros de la base de datos
      public function save () {
          
-        $sql = "INSERT INTO internaciones VALUES(null,{$this->getIdDePaciente()},'{$this->getFechaIngreso()}','{$this->getFechaEgreso()}',1)";
+        $sql = "INSERT INTO internaciones VALUES(null,{$this->getIdDePaciente()},'{$this->getFechaIngreso()}','{$this->getFechaEgreso()}')";
 
         $save = $this->db->query($sql);
 
