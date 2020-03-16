@@ -107,11 +107,47 @@ class Practica
         return $query;
     }
 
-    // Gurdar registro en la BD
+    // Selecciona todos los registros de la DB
+    public function viewOne()
+    {
+        $sql = "SELECT * FROM practicas WHERE idPractica = {$this->getId()}";
+
+        $practica = $this->db->query($sql);
+
+        return $practica->fetch_object();
+    }
+
+    // Guardar registro en la BD
     public function save()
     {
 
         $sql = "INSERT INTO practicas VALUES(null,'{$this->getCodigo()}','{$this->getDescripcion()}',{$this->getCantMaxDiaria()},{$this->getCantMaxMen()},{$this->getCantMaxAnu()},1)";
+
+        $save = $this->db->query($sql);
+
+        return $save;
+    }
+
+    // Editar registro en la BD
+    public function edit()
+    {
+
+        $sql = "UPDATE practicas SET codigo = '{$this->getCodigo()}',
+                                      descripcion='{$this->getDescripcion()}',
+                                      cantMaxDiaria={$this->getCantMaxDiaria()},
+                                      cantMaxMen={$this->getCantMaxMen()},
+     cantMaxAnu={$this->getCantMaxAnu()} WHERE idPractica={$this->getId()}";
+
+        $save = $this->db->query($sql);
+
+        return $save;
+    }
+
+    // Desactivar registro en la BD
+    public function off()
+    {
+
+        $sql = "UPDATE practicas SET activo = 0";
 
         $save = $this->db->query($sql);
 

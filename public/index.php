@@ -53,6 +53,18 @@
         'action' => 'save'
     ]);
 
+    $map->get('editPractica', '/fuerarango/practicas/edit', [
+        'controller' => 'App\Controllers\PracticaController',
+        'action' => 'edit'
+    ]);
+
+    $map->get('offPractica', '/fuerarango/practicas/off', [
+        'controller' => 'App\Controllers\PracticaController',
+        'action' => 'off'
+    ]);
+
+    
+
 
     /* INTERNACION */
     $map->get('addInternacion', '/fuerarango/internaciones/nueva', [

@@ -15,15 +15,15 @@
         <div class="col">
       
 
-            <table class="table">
+            <table class="table tablaClasica">
 
                 <thead>
                     <tr>
                         <th>Código</th>
                         <th>Descripción</th>
-                        <th>Límite diario</th>
-                        <th>Límite mensual</th>
-                        <th>Límite anual</th>
+                        <th class="tablaRangosTitulo">Límite diario</th>
+                        <th class="tablaRangosTitulo">Límite mensual</th>
+                        <th class="tablaRangosTitulo">Límite anual</th>
                         <th></th>
                     </tr>
 
@@ -50,12 +50,13 @@
                     <tr>
                         <td><?php echo $practica->codigo ?></td>
                         <td><?php echo $practica->descripcion ?></td>
-                        <td><?php echo $practica->cantMaxDiaria ?></td>
-                        <td><?php echo $practica->cantMaxMen ?></td>
-                        <td><?php echo $practica->cantMaxAnu ?></td>
-                        <td><button type="button" class="btn btn-success btn-sm">Exclusiones</button>
-                            <button type="button" class="btn btn-primary btn-sm" ><i class="fas fa-pen"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                        <td class="tablaRangos"><?php echo $practica->cantMaxDiaria ?></td>
+                        <td class="tablaRangos"><?php echo $practica->cantMaxMen ?></td>
+                        <td class="tablaRangos"><?php echo $practica->cantMaxAnu ?></td>
+                        <td class="tablaBotonera"><button type="button" class="btn btn-success btn-sm">Exclusiones</button>
+                            <a href="practicas/edit?id=<?php echo $practica->idPractica ?>" class="btn btn-primary btn-sm"><i class="fas fa-pen"></i></a>
+                            <a href="practicas/off?id=<?php echo $practica->idPractica ?>" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                        </td>
                     </tr>
 
                 <?php endwhile ?>

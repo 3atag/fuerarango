@@ -4,58 +4,132 @@ namespace App\Controllers;
 
 use App\Models\Practica;
 
-class PracticaController {
+class PracticaController
+{
 
-    /***** Mostrar registros *****/    
-    public function viewAll () {
-      
+    /***** Mostrar registros *****/
+    public function viewAll()
+    {
+
         $practica = new Practica();
 
-        $practicas = $practica->viewAll();      
-        
-        require '../views/practica/practicas.php';
-        
-    }
- 
+        $practicas = $practica->viewAll();
 
-    public function add () {
+        require '../views/practica/practicas.php';
+    }
+
+
+    public function add()
+    {
 
         require '../views/practica/crear.php';
-
     }
 
-    public function save () {
+    public function save()
+    {
 
         if (isset($_POST)) {
 
-            $paciente = new Practica;
+            $practica = new Practica;
 
-            $paciente->setCodigo($_POST['codigo']);
-            $paciente->setDescripcion($_POST['descripcion']);
-            $paciente->setCantMaxDiaria($_POST['cantMaxDiaria']);
-            $paciente->setCantMaxMen($_POST['cantMaxMen']);
-            $paciente->setCantMaxAnu($_POST['cantMaxAnu']);
+            $practica->setId($_POST['idPractica']);
 
+            $practica->setCodigo($_POST['codigo']);
+            $practica->setDescripcion($_POST['descripcion']);
+            $practica->setCantMaxDiaria($_POST['cantMaxDiaria']);
+            $practica->setCantMaxMen($_POST['cantMaxMen']);
+            $practica->setCantMaxAnu($_POST['cantMaxAnu']);
 
-            if ($paciente->save()) {
-                header('Location:/fuerarango/practicas');
+            if (isset($_POST["idPractica"]) && $_POST["idPractica"] !='') {
+
+                $idPrac = $_POST["idPractica"];
+
+                $practica->setId($idPrac);
+
+                if ($editado = $practica->edit()) {
+
+                    $respuesta = array(
+                        'resultado' => 'correcto',
+                        'mensaje' => 'La practica ha sido editada con exito'
+                    );                 
+                  
+                    // header('Location:/fuerarango/practicas');
+
+                } else {
+
+                    $respuesta = array(
+                        'resultado' => 'Error',
+                        'mensaje' => 'Ha ocurrido un error al intentar editar la practica'
+                    );
+
+                }
+
+                
 
             } else {
-                var_dump('Ha ocurrido un error al intentar guardar el registro');
+
+
+                if ($practica->save()) {
+
+                    $respuesta = array(
+                        'resultado' => 'correcto',
+                        'mensaje' => 'La practica ha sido creada con exito'
+                    );
+
+                    // header('Location:/fuerarango/practicas');
+
+                } else {
+                    
+                    $respuesta = array(
+                    'resultado' => 'Error',
+                    'mensaje' => 'Ha ocurrido un error al intentar crear la practica'
+                );
+                
+                }             
+
+
             }
+                             
         }
 
-      
+        header('Content-Type: application/json');
+
+        echo json_encode($respuesta);
     }
 
-    // public function edit () {
+    
 
-    // }
+    public function edit()
+    {
 
-    // public function off () {
+        if (isset($_GET["id"])) {
 
-    // }
+            $id = $_GET["id"];
 
-   
+            $edit = true;
+
+            $practica = new Practica();
+
+            $practica->setId($id);
+
+            $pra = $practica->viewOne();
+
+
+            require_once '../views/practica/crear.php';
+        } else {
+
+            header('Location:/fuerarango/practicas');
+        }
+    }
+
+    public function off()
+    {
+
+        var_dump($_GET);
+    }
+
+  
 
 }
+
+     
