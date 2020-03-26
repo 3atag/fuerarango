@@ -5,8 +5,6 @@
     
     $url_action = "save?id=$pra->idPractica";
     $btn_value = "Actualizar";
-    $campoId = '<input type="hidden" name="iD" id="iD" value="1">';
-
 
     ?>
 
@@ -15,8 +13,7 @@
 <?php else: 
     
     $url_action = "save";
-    $btn_value = "Agregar";
-    $campoId = '';
+    $btn_value = "Agregar"; 
     
     ?>
 
@@ -33,7 +30,7 @@
         <div class="form-row">
             
             <div class="col-2">
-            <?php echo $campoId; ?> 
+         
                 <label for="nombre">Codigo <span>*</span></label>
                 <input type="text" name="codigo" id="codigo" value="<?=isset($pra) && is_object($pra) ? $pra->codigo : ''; ?>" class="form-control" maxlength="6" required>
             </div>

@@ -1,0 +1,50 @@
+<div class="agregar_paciente">
+
+    <div class="row ">
+
+        <div class="col-6 botonera-agregar">
+            <a href="pacientes/nuevo">
+                <i class="fas fa-plus-circle fa-2x"></i>
+            </a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+
+            <table class="table tablaClasica">
+
+             <thead>
+                    <tr>
+                        <th>Beneficio</th>
+                        <th>Nombre</th>
+                        <th>DNI</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+                {% for paciente in pacientes %}
+
+                    <tr>
+                        <td>{{ paciente.beneficio}}</td>
+                        <td>{{ paciente.nombre}}</td>
+                        <td>{{ paciente.dni}}</td>
+                        <td><button type="button" class="btn btn-info">Editar</button></td>
+                        <td><button type="button" class="btn btn-danger">Eliminar</button></td>
+                    </tr>
+
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+<div class="form-row botonera-comun">
+        <div class="col">
+
+            <a href="/fuerarango"><button type="button" class="btn btn-secondary btn-sm">Volver</button></a>
+        </div>
+    </div>
+</div>

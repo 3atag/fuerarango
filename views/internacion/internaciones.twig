@@ -1,0 +1,59 @@
+<div class="agregar_internacion">
+
+    <div class="row ">
+
+        <div class="col-6 botonera-agregar">
+            <a href="internaciones/nueva">
+                <i class="fas fa-plus-circle fa-2x"></i>
+            </a>
+        </div>
+
+        <div class="col botonera">
+
+            <a href="pacientes" class="btn btn-secondary">
+                <i class="fas fa-user-injured fa-lg"></i>
+            </a>
+
+            <a href="practicas" class="btn btn-secondary">
+                <i class="fas fa-clinic-medical fa-lg"></i>
+            </a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+  
+            <table class="table tablaClasica">
+
+            <thead>
+                    <tr>
+                        <th>Beneficio</th>
+                        <th>Nombre</th>
+                        <th>Fecha/hora ingreso</th>
+                        <th>Fecha/hora egreso</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+                 {% for internacion in internaciones %}
+
+                    <tr>
+                        <td>{{ internacion.beneficio}}</td>
+                        <td>{{ internacion.nombre}}</td>
+                        <td>{{ internacion.fechaIngreso}}</td>
+                        <td>{{ internacion.fechaEgreso}}</td>
+                         <td><button type="button" class="btn btn-info">Editar</button></td>
+                        <td><button type="button" class="btn btn-danger">Eliminar</button></td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+
+</div>

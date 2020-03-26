@@ -7,6 +7,34 @@
 
     require_once '../views/templates/header.php';
 
+
+    /*----------- Laravel Eloquent Config ------------*/
+
+    use Illuminate\Database\Capsule\Manager as Capsule;
+
+    $capsule = new Capsule;
+
+    $capsule->addConnection([
+        'driver'    => 'mysql',
+        'host'      => 'localhost',
+        'database'  => 'fuerarango',
+        'username'  => 'root',
+        'password'  => '',
+        'charset'   => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix'    => '',
+    ]);
+
+    // Make this Capsule instance available globally via static methods... (optional)
+    $capsule->setAsGlobal();
+
+    // Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
+    $capsule->bootEloquent();
+
+
+    /*----------- AURA ROUTER Config ------------*/
+
+    use App\Controllers\PracticaController;
     use Aura\Router\RouterContainer;
 
     $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
@@ -22,35 +50,35 @@
     $map = $routerContainer->getMap();
 
     /* PACIENTES */
-    $map->get('indexPacientes', '/fuerarango/pacientes/index', [
+    $map->get('indexPacientes', '/fuerarango/pacientes', [
         'controller' => 'App\Controllers\PacienteController',
-        'action' => 'viewAll'
+        'action' => 'getAllPacienteAction'
     ]);
 
     $map->get('addPaciente', '/fuerarango/pacientes/nuevo', [
         'controller' => 'App\Controllers\PacienteController',
-        'action' => 'add'
+        'action' => 'getAddPacienteAction'
     ]);
 
     $map->post('savePaciente', '/fuerarango/pacientes/save', [
         'controller' => 'App\Controllers\PacienteController',
-        'action' => 'save'
+        'action' => 'postSavePacienteAction'
     ]);
 
     /* PRACTICAS */
     $map->get('indexPracticas', '/fuerarango/practicas', [
         'controller' => 'App\Controllers\PracticaController',
-        'action' => 'viewAll'
+        'action' => 'getAllPracticaAction'
     ]);
 
     $map->get('addPractica', '/fuerarango/practicas/nueva', [
         'controller' => 'App\Controllers\PracticaController',
-        'action' => 'add'
+        'action' => 'getAddPracticaAction'
     ]);
 
     $map->post('savePractica', '/fuerarango/practicas/save', [
         'controller' => 'App\Controllers\PracticaController',
-        'action' => 'save'
+        'action' => 'postSavePracticaAction'
     ]);
 
     $map->get('editPractica', '/fuerarango/practicas/edit', [
@@ -63,23 +91,20 @@
         'action' => 'off'
     ]);
 
-    
-
-
     /* INTERNACION */
     $map->get('addInternacion', '/fuerarango/internaciones/nueva', [
         'controller' => 'App\Controllers\InternacionController',
-        'action' => 'add'
+        'action' => 'getAddInternacionAction'
     ]);
 
     $map->post('saveInternacion', '/fuerarango/internaciones/save', [
         'controller' => 'App\Controllers\InternacionController',
-        'action' => 'save'
+        'action' => 'postSaveInternacionAction'
     ]);
 
     $map->get('index', '/fuerarango/', [
         'controller' => 'App\Controllers\InternacionController',
-        'action' => 'viewAll'
+        'action' => 'getAllInternacionAction'
     ]);
 
     $matcher = $routerContainer->getMatcher();
@@ -90,14 +115,19 @@
 
         echo 'no route';
     } else {
+
         $handlerData = $route->handler;
         $controllerName = $handlerData['controller'];
         $actionName = $handlerData['action'];
 
         $controller = new $controllerName;
-        $controller->$actionName();
+        $response = $controller->$actionName($request);
+
+        echo $response->getBody();
+
     }
 
 
     require_once '../views/templates/footer.php'
+
     ?>

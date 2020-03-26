@@ -2,134 +2,45 @@
 
 namespace App\Controllers;
 
+use App\Controllers\BaseController;
 use App\Models\Practica;
 
-class PracticaController
+class PracticaController extends BaseController
 {
-
-    /***** Mostrar registros *****/
-    public function viewAll()
+    /***** Mostrar todos los registros *****/
+    public function getAllPracticaAction()
     {
+        $practicas = Practica::all();
 
-        $practica = new Practica();
-
-        $practicas = $practica->viewAll();
-
-        require '../views/practica/practicas.php';
+        return $this->renderHTML('practica/practicas.twig', [
+            'practicas' => $practicas
+        ]);
     }
 
-
-    public function add()
+    /***** Mostrar formulario agregar registro *****/
+    public function getAddPracticaAction()
     {
-
         require '../views/practica/crear.php';
     }
 
-    public function save()
+    /***** Guardar registro *****/
+    public function postSavePracticaAction($request)
     {
+        if ($request->getMethod() == 'POST') {
 
-        if (isset($_POST)) {
+            $postData = $request->getParsedBody();
 
             $practica = new Practica;
 
-            $practica->setId($_POST['idPractica']);
+            $practica->codigo = $postData['codigo'];
+            $practica->descripcion = $postData['descripcion'];
+            $practica->cantMaxDiaria = $postData['cantMaxDiaria'];
+            $practica->cantMaxMen = $postData['cantMaxMen'];
+            $practica->cantMaxAnu = $postData['cantMaxAnu'];
 
-            $practica->setCodigo($_POST['codigo']);
-            $practica->setDescripcion($_POST['descripcion']);
-            $practica->setCantMaxDiaria($_POST['cantMaxDiaria']);
-            $practica->setCantMaxMen($_POST['cantMaxMen']);
-            $practica->setCantMaxAnu($_POST['cantMaxAnu']);
-
-            if (isset($_POST["idPractica"]) && $_POST["idPractica"] !='') {
-
-                $idPrac = $_POST["idPractica"];
-
-                $practica->setId($idPrac);
-
-                if ($editado = $practica->edit()) {
-
-                    $respuesta = array(
-                        'resultado' => 'correcto',
-                        'mensaje' => 'La practica ha sido editada con exito'
-                    );                 
-                  
-                    // header('Location:/fuerarango/practicas');
-
-                } else {
-
-                    $respuesta = array(
-                        'resultado' => 'Error',
-                        'mensaje' => 'Ha ocurrido un error al intentar editar la practica'
-                    );
-
-                }
-
-                
-
-            } else {
-
-
-                if ($practica->save()) {
-
-                    $respuesta = array(
-                        'resultado' => 'correcto',
-                        'mensaje' => 'La practica ha sido creada con exito'
-                    );
-
-                    // header('Location:/fuerarango/practicas');
-
-                } else {
-                    
-                    $respuesta = array(
-                    'resultado' => 'Error',
-                    'mensaje' => 'Ha ocurrido un error al intentar crear la practica'
-                );
-                
-                }             
-
-
-            }
-                             
-        }
-
-        header('Content-Type: application/json');
-
-        echo json_encode($respuesta);
-    }
-
-    
-
-    public function edit()
-    {
-
-        if (isset($_GET["id"])) {
-
-            $id = $_GET["id"];
-
-            $edit = true;
-
-            $practica = new Practica();
-
-            $practica->setId($id);
-
-            $pra = $practica->viewOne();
-
-
-            require_once '../views/practica/crear.php';
-        } else {
+            $practica->save();
 
             header('Location:/fuerarango/practicas');
         }
     }
-
-    public function off()
-    {
-
-        var_dump($_GET);
-    }
-
-  
-
 }
-
-     

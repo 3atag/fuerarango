@@ -2,64 +2,53 @@
 
 namespace App\Controllers;
 
+use App\Controllers\BaseController;
 use App\Models\{Internacion, Paciente};
 
-class InternacionController {
+class InternacionController extends BaseController
+{
 
-    public function add () {
+    /***** Mostrar todos los registros *****/
+    public function getAllInternacionAction()
+    {
+        $internaciones = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
+            ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
+            ->get();
 
-        $paciente = new Paciente();
 
-        $pacientes = $paciente->showAll();          
-
-        require '../views/internacion/crear.php';
-        require '../views/internacion/modalPacientes.php';
-
+        return $this->renderHTML('internacion/internaciones.twig', [
+            'internaciones' => $internaciones
+        ]);
     }
 
-    public function save () {
 
-        if(isset ($_POST)){
+    /***** Mostrar formulario agregar registro *****/
+    public function getAddInternacionAction()
+    {
+        $pacientes = Paciente::all();
 
-            $internacion = new Internacion;            
+        return $this->renderHTML('internacion/crear.twig', [
+            'pacientes' => $pacientes
+        ]);
+    }
 
-            $internacion->setIdDePaciente($_POST['id_paciente']);
-            $internacion->setFechaIngreso($_POST['fechaIng']);
-            $internacion->setFechaEgreso($_POST['fechaEgr']);
 
-            if ($internacion->save()) {
-                header('Location:../');
+    /***** Guardar registro *****/
+    public function postSaveInternacionAction($request)
+    {        
+        if ($request->getMethod() == 'POST') {
 
-            } else {
-                var_dump('Ha ocurrido un error al intentar guardar el registro');
-            }
+            $postData = $request->getParsedBody();
 
-                     
+            $internacion = new Internacion;
 
+            $internacion->idDePaciente = $postData['id_paciente'];
+            $internacion->fechaIngreso = $postData['fechaIng'];
+            $internacion->fechaEgreso = $postData['fechaEgr'];
+
+            $internacion->save();
+
+            header('Location:/fuerarango');
         }
     }
-
-    public function edit () {
-
-    }
-
-    public function off () {
-
-    }
-
-    public function viewAll () {
-
-        // Instancio el modelo y ejecuto el metodo correspondiente
-        $Internacion = new Internacion();
-
-        $internaciones = $Internacion->showAll();
-
-        // Envio a la vistas
-        require '../views/internacion/mostrarTodos.php';
-        
-    }
-    
-
-
-
 }

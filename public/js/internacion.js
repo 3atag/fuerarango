@@ -26,14 +26,15 @@
 
        const expresion = RegExp (e.target.value, "i");
 
-     
+    
 
        registros.forEach(registro =>{
-
+    
            registro.style.display = 'none';
 
            if(registro.childNodes[5].textContent.replace(/\s/g, " ").search(expresion) != -1) {
 
+                        
             registro.style.display = 'table-row';
 
            }

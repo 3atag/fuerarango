@@ -2,58 +2,47 @@
 
 namespace App\Controllers;
 
+use App\Controllers\BaseController;
 use App\Models\Paciente;
 
-class PacienteController {
+class PacienteController extends BaseController
+{
 
-    public function add () {
+    /***** Mostrar todos los registros *****/
+    public function getAllPacienteAction()
+    {
+        $pacientes = Paciente::all();
 
-        require '../views/paciente/crear.php';
-
+        return $this->renderHTML('paciente/pacientes.twig', [
+            'pacientes' => $pacientes
+        ]);
     }
 
-    public function save () {
+    /***** Mostrar formulario agregar registro *****/
+    public function getAddPacienteAction()
+    {
+        return $this->renderHTML('paciente/crear.twig');
+    }
 
-        if (isset($_POST)) {
+
+    /***** Guardar registro *****/
+    public function postSavePacienteAction($request)
+    {
+        if ($request->getMethod() == 'POST') {
+
+            $postData = $request->getParsedBody();
 
             $paciente = new Paciente;
 
-            $paciente->setNombre($_POST['nombre']);
-            $paciente->setBeneficio($_POST['beneficio']);
-            $paciente->setDni($_POST['dni']);
+            $paciente->nombre = $postData['nombre'];
+            $paciente->beneficio = $postData['beneficio'];
+            $paciente->dni = $postData['dni'];            
 
+            $paciente->save();
 
-            if ($paciente->save()) {
-                header('Location:../');
-
-            } else {
-                var_dump('Ha ocurrido un error al intentar guardar el registro');
-            }
+            header('Location:/fuerarango/pacientes');
         }
-
-      
     }
 
-    public function edit () {
-
-    }
-
-    public function off () {
-
-    }
-
-    public function viewAll () {
-
-        // Instancio el modelo y ejecuto el metodo correspondiente
-        $paciente = new Paciente();
-
-        $pacientes = $paciente->showAll();       
-
-        // Envio a la vistas
-        
-        require '../views/paciente/mostrarTodos.php';
-        
-    }
- 
 
 }
