@@ -14,14 +14,17 @@ class PacienteController extends BaseController
         $pacientes = Paciente::all();
 
         return $this->renderHTML('paciente/pacientes.twig', [
-            'pacientes' => $pacientes
+            'pacientes' => $pacientes,
+            'base_url' => $this->base_url
         ]);
     }
 
     /***** Mostrar formulario agregar registro *****/
     public function getAddPacienteAction()
     {
-        return $this->renderHTML('paciente/crear.twig');
+        return $this->renderHTML('paciente/crear.twig',[            
+            'base_url' => $this->base_url
+        ]);
     }
 
 

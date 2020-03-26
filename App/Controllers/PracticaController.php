@@ -13,14 +13,17 @@ class PracticaController extends BaseController
         $practicas = Practica::all();
 
         return $this->renderHTML('practica/practicas.twig', [
-            'practicas' => $practicas
+            'practicas' => $practicas,
+            'base_url' => $this->base_url
         ]);
     }
 
     /***** Mostrar formulario agregar registro *****/
     public function getAddPracticaAction()
     {
-        require '../views/practica/crear.php';
+        return $this->renderHTML('practica/crear.twig',[            
+            'base_url' => $this->base_url
+        ]);
     }
 
     /***** Guardar registro *****/

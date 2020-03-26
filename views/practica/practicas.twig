@@ -1,60 +1,65 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
 <div class="contenedor-views">
 
-    <div class="row ">
+	<div class="row ">
 
-        <div class="col-6 botonera-agregar">
-            <a href="practicas/nueva">
-                <i class="fas fa-plus-circle fa-2x"></i>
-            </a>
-        </div>
-
-
-    </div>
-
-    <div class="row">
-        <div class="col">
+		<div class="col-6 botonera-agregar">
+			<a href="practicas/nueva">
+				<i class="fas fa-plus-circle fa-2x"></i>
+			</a>
+		</div>
 
 
-            <table class="table tablaClasica">
+	</div>
 
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Descripción</th>
-                        <th class="tablaRangosTitulo">Límite diario</th>
-                        <th class="tablaRangosTitulo">Límite mensual</th>
-                        <th class="tablaRangosTitulo">Límite anual</th>
-                        <th></th>
-                    </tr>
-
-                </thead>
-                
-                    {% for practica in practicas %}
-                    <tr>
-                    <td>{{ practica.codigo}}</td>
-                    <td>{{ practica.descripcion }}</td>
-                     <td>{{ practica.cantMaxDiaria }}</td>
-                      <td>{{ practica.cantMaxMen }}</td>
-                       <td>{{ practica.cantMaxAnu }}</td>
-                     </tr>
-
-                    {% endfor %}
-                    
-                
+	<div class="row">
+		<div class="col">
 
 
+			<table class="table tablaClasica">
 
-            </table>
-        </div>
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Descripción</th>
+						<th class="tablaRangosTitulo">Límite diario</th>
+						<th class="tablaRangosTitulo">Límite mensual</th>
+						<th class="tablaRangosTitulo">Límite anual</th>
+						<th></th>
+					</tr>
+
+				</thead>
+
+				{% for practica in practicas %}
+					<tr>
+						<td>{{ practica.codigo}}</td>
+						<td>{{ practica.descripcion }}</td>
+						<td>{{ practica.cantMaxDiaria }}</td>
+						<td>{{ practica.cantMaxMen }}</td>
+						<td>{{ practica.cantMaxAnu }}</td>
+					</tr>
+
+				{% endfor %}
 
 
-    </div>
+			</table>
+		</div>
 
-    <div class="form-row botonera-comun">
-        <div class="col">
 
-            <a href="/fuerarango"><button type="button" class="btn btn-secondary btn-sm">Volver</button></a>
-        </div>
-    </div>
+	</div>
+
+	<div class="form-row botonera-comun">
+		<div class="col">
+
+			<a href="/fuerarango">
+				<button type="button" class="btn btn-secondary btn-sm">Volver</button>
+			</a>
+		</div>
+	</div>
 
 </div>
+
+{% endblock %}

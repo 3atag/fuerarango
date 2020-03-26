@@ -5,19 +5,24 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\{Internacion, Paciente};
 
+use Respect\Validation\Validator as v;
+
 class InternacionController extends BaseController
 {
 
     /***** Mostrar todos los registros *****/
     public function getAllInternacionAction()
     {
+
         $internaciones = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
             ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
             ->get();
 
 
         return $this->renderHTML('internacion/internaciones.twig', [
-            'internaciones' => $internaciones
+            'internaciones' => $internaciones,
+            'base_url' => $this->base_url
+
         ]);
     }
 
@@ -28,27 +33,32 @@ class InternacionController extends BaseController
         $pacientes = Paciente::all();
 
         return $this->renderHTML('internacion/crear.twig', [
-            'pacientes' => $pacientes
+            'pacientes' => $pacientes,
+            'base_url' => $this->base_url
         ]);
     }
 
 
     /***** Guardar registro *****/
     public function postSaveInternacionAction($request)
-    {        
+    {
         if ($request->getMethod() == 'POST') {
 
             $postData = $request->getParsedBody();
 
-            $internacion = new Internacion;
+            $internacionValidator = v::key('id_paciente', v::intVal()->notEmpty());
 
-            $internacion->idDePaciente = $postData['id_paciente'];
-            $internacion->fechaIngreso = $postData['fechaIng'];
-            $internacion->fechaEgreso = $postData['fechaEgr'];
+            var_dump($internacionValidator->validate($postData));
 
-            $internacion->save();
+            // $internacion = new Internacion;
 
-            header('Location:/fuerarango');
+            // $internacion->idDePaciente = $postData['id_paciente'];
+            // $internacion->fechaIngreso = $postData['fechaIng'];
+            // $internacion->fechaEgreso = $postData['fechaEgr'];
+
+            // $internacion->save();
+
+            // header('Location:/fuerarango');
         }
     }
 }

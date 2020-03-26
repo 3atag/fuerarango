@@ -3,11 +3,6 @@
 
     require_once '../vendor/autoload.php';
 
-    require_once '../config/parameters.php';
-
-    require_once '../views/templates/header.php';
-
-
     /*----------- Laravel Eloquent Config ------------*/
 
     use Illuminate\Database\Capsule\Manager as Capsule;
@@ -126,8 +121,5 @@
         echo $response->getBody();
 
     }
-
-
-    require_once '../views/templates/footer.php'
 
     ?>
