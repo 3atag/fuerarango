@@ -42,23 +42,44 @@ class InternacionController extends BaseController
     /***** Guardar registro *****/
     public function postSaveInternacionAction($request)
     {
+
+        $responseMessage  = null;
+
         if ($request->getMethod() == 'POST') {
 
             $postData = $request->getParsedBody();
 
-            $internacionValidator = v::key('id_paciente', v::intVal()->notEmpty());
+            $internacionValidator = v::key('id_paciente', v::intVal()->notEmpty())
+                ->key('fechaIng', v::date())
+                ->key('fechaEgr', v::date());
 
-            var_dump($internacionValidator->validate($postData));
+            try {
 
-            // $internacion = new Internacion;
+                $internacionValidator->assert($postData);
 
-            // $internacion->idDePaciente = $postData['id_paciente'];
-            // $internacion->fechaIngreso = $postData['fechaIng'];
-            // $internacion->fechaEgreso = $postData['fechaEgr'];
+                if ($postData['fechaEgr'] > $postData['fechaIng']) {
 
-            // $internacion->save();
+                    $internacion = new Internacion;
 
-            // header('Location:/fuerarango');
+                    $internacion->idDePaciente = $postData['id_paciente'];
+                    $internacion->fechaIngreso = $postData['fechaIng'];
+                    $internacion->fechaEgreso = $postData['fechaEgr'];
+
+                    $internacion->save();
+
+                    $responseMessage = 'Internacion guardada con exito';
+                } else {
+                    $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
+                }
+
+            } catch (\Exception $e) {
+
+                $responseMessage = $e->getMessage();
+            }
+
+            return $this->renderHTML('internacion/crear.twig', [
+                'responseMessage' => $responseMessage
+            ]);
         }
     }
 }
