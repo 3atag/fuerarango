@@ -102,6 +102,12 @@
         'action' => 'getAllInternacionAction'
     ]);
 
+    $map->get('editInternacion', '/fuerarango/internaciones/edit/{id}', [
+        'controller' => 'App\Controllers\InternacionController',
+        'action' => 'getEditInternacionAction'
+    ]);
+
+    
     $matcher = $routerContainer->getMatcher();
 
     $route = $matcher->match($request);
@@ -109,6 +115,7 @@
     if (!$route) {
 
         echo 'no route';
+
     } else {
 
         $handlerData = $route->handler;

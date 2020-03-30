@@ -14,7 +14,7 @@ class InternacionController extends BaseController
     public function getAllInternacionAction()
     {
 
-        $internaciones = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
+        $internaciones = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.idInternacion', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
             ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
             ->get();
 
@@ -72,13 +72,12 @@ class InternacionController extends BaseController
                 } else {
                     $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
                 }
-
             } catch (\Exception $e) {
 
                 $responseMessage = $e->getMessage();
             }
 
-            
+
 
             return $this->renderHTML('internacion/crear.twig', [
                 'responseMessage' => $responseMessage,
@@ -86,5 +85,28 @@ class InternacionController extends BaseController
                 'base_url' => $this->base_url
             ]);
         }
+    }
+
+    /***** Mostrar formulario agregar registro *****/
+    public function getEditInternacionAction($request)
+    {
+
+        var_dump($request);
+
+        
+
+        // $internaciones = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.idInternacion', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
+        //     ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
+        //     ->where('internaciones.idInternacion', '=', $id)
+        //     ->get();
+
+        //     var_dump($internaciones);
+
+        // return $this->renderHTML('internacion/crear.twig', [
+
+        //     'internaciones' => $internaciones,
+        //     'base_url' => $this->base_url
+
+        // ]); 
     }
 }
