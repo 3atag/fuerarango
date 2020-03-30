@@ -42,6 +42,7 @@ class InternacionController extends BaseController
     /***** Guardar registro *****/
     public function postSaveInternacionAction($request)
     {
+        $pacientes = Paciente::all();
 
         $responseMessage  = null;
 
@@ -77,8 +78,12 @@ class InternacionController extends BaseController
                 $responseMessage = $e->getMessage();
             }
 
+            
+
             return $this->renderHTML('internacion/crear.twig', [
-                'responseMessage' => $responseMessage
+                'responseMessage' => $responseMessage,
+                'pacientes' => $pacientes,
+                'base_url' => $this->base_url
             ]);
         }
     }

@@ -4,13 +4,13 @@
 
 	<div class="crear_internacion">
 		<h4>Agregar Internacion</h4>
+		{% if responseMessage %}
+		<div class="alert alert-primary" role="alert">	
 
-		<div class="alert alert-primary" role="alert">
+				{{ responseMessage }}
 
-		{{ responseMessage }}
-		
-		</div> 
-
+			</div>
+		{% endif %}
 		<form action="save" method="post">
 
 			<div class="form-group">
