@@ -5,7 +5,7 @@
 	<div class="crear_internacion">
 		<h4>Agregar Internacion</h4>
 		{% if responseMessage %}
-		<div class="alert alert-primary" role="alert">	
+			<div class="alert alert-primary" role="alert">
 
 				{{ responseMessage }}
 
@@ -13,11 +13,13 @@
 		{% endif %}
 		<form action="save" method="post">
 
-			<div class="form-group">
-			
-
-				<input type="hidden" name="id_paciente" id="id_paciente" class="form-control">
-
+			<div class="form-group">			
+						
+				{% if isEdit %}
+				<p>hola</p>
+				{% endif %}
+					<input type="hidden" name="id_paciente" id="id_paciente" class="form-control" value="">
+				
 
 				<label for="paciente">Paciente</label>
 				<div class="input-group">

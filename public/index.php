@@ -102,7 +102,7 @@
         'action' => 'getAllInternacionAction'
     ]);
 
-    $map->get('editInternacion', '/fuerarango/internaciones/edit/{id}', [
+    $map->get('editInternacion', '/fuerarango/internaciones/edit', [        
         'controller' => 'App\Controllers\InternacionController',
         'action' => 'getEditInternacionAction'
     ]);

@@ -14,7 +14,7 @@ class InternacionController extends BaseController
     public function getAllInternacionAction()
     {
 
-        $internaciones = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.idInternacion', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
+        $internaciones = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
             ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
             ->get();
 
@@ -48,6 +48,7 @@ class InternacionController extends BaseController
 
         if ($request->getMethod() == 'POST') {
 
+            
             $postData = $request->getParsedBody();
 
             $internacionValidator = v::key('id_paciente', v::intVal()->notEmpty())
@@ -91,22 +92,31 @@ class InternacionController extends BaseController
     public function getEditInternacionAction($request)
     {
 
-        var_dump($request);
 
-        
+        if ($request->getMethod() == 'GET') {        
+            
+            
+            $getId = $request->getQueryParams();
 
-        // $internaciones = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.idInternacion', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
-        //     ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
-        //     ->where('internaciones.idInternacion', '=', $id)
-        //     ->get();
+            $id = (int) $getId['id'];
 
-        //     var_dump($internaciones);
+            $internacion = Internacion::find($id);            
+          
+            // $internacion = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
+            //     ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
+            //     ->where('internaciones.id', '=', $id)
+            //     ->get();
+            
+            return $this->renderHTML('internacion/crear.twig', [
 
-        // return $this->renderHTML('internacion/crear.twig', [
+                'internacion' => $internacion,
+                'base_url' => $this->base_url,
+                'isEdit' => true
+            ]);
 
-        //     'internaciones' => $internaciones,
-        //     'base_url' => $this->base_url
+        } else {
 
-        // ]); 
+            var_dump('error');
+        }
     }
 }
