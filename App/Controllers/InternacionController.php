@@ -7,6 +7,8 @@ use App\Models\{Internacion, Paciente};
 
 use Respect\Validation\Validator as v;
 
+use Laminas\Diactoros\Response\RedirectResponse;
+
 class InternacionController extends BaseController
 {
 
@@ -70,6 +72,8 @@ class InternacionController extends BaseController
                     $internacion->save();
 
                     $responseMessage = 'Internacion guardada con exito';
+
+                    
                 } else {
                     $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
                 }
@@ -92,27 +96,37 @@ class InternacionController extends BaseController
     public function getEditInternacionAction($request)
     {
 
+        $pacientes = Paciente::all();
 
         if ($request->getMethod() == 'GET') {        
             
             
-            $getId = $request->getQueryParams();
+            var_dump($request);
 
-            $id = (int) $getId['id'];
+            // Hector!!! Quiero recibir el id aca!!! para editar un registro ////
 
-            $internacion = Internacion::find($id);            
+
+
+
+
+            // $getId = $request->getQueryParams();
+
+            // $id = (int) $getId['id'];
+
+            // // $internacion = Internacion::find($id);            
           
             // $internacion = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
             //     ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
             //     ->where('internaciones.id', '=', $id)
-            //     ->get();
-            
-            return $this->renderHTML('internacion/crear.twig', [
+            //     ->first();
+                    
+            // return $this->renderHTML('internacion/crear.twig', [
 
-                'internacion' => $internacion,
-                'base_url' => $this->base_url,
-                'isEdit' => true
-            ]);
+            //     'internacion' => $internacion,
+            //     'pacientes' => $pacientes,
+            //     'base_url' => $this->base_url,
+            //     'isEdit' => true
+            // ]);
 
         } else {
 
