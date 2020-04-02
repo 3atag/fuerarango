@@ -3,111 +3,136 @@
 {% block content %}
 
 	<div class="crear_internacion">
-		<h4>Agregar Internacion</h4>
-		{% if responseMessage %}
-			<div class="alert alert-primary" role="alert">
+		{% if isEdit %}
+			<h4>Editar Internacion</h4>
+		{% else %}
 
+			<h4>Agregar Internacion</h4>
+
+			{% if responseMessage %}
+			
+			<div class="alert alert-primary"role="alert">
 				{{ responseMessage }}
 
 			</div>
-		{% endif %}
-		<form action="save" method="post">
 
-			<div class="form-group">			
-						
-				
-					<input type="hidden" name="id_paciente" id="id_paciente" class="form-control" value="{% if isEdit %}{{internacion.id}}{% endif %}">
-				
-
-				<label for="paciente">Paciente</label>
-				<div class="input-group">
-
-					<input type="text" name="nom_paciente" id="nom_paciente" class="form-control" value="{% if isEdit %}{{internacion.nombre}}{% endif %}">
-
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modalAddPaciente" id="btnSeleccionar">Seleccionar</button>
-					</div>
-				</div>
-
-			</div>
+			{% endif %} 
+			
+	{% endif %}
 
 
-			<div class="form-group">
-				<label for="fechaIng">Fecha ingreso</label>
-				<input type="datetime-local" name="fechaIng" id="fechaIng" class="form-control"  value="{% if isEdit %}{{internacion.fechaIngreso|date('Y-m-d H:i:s')}}{% endif %}">
-			</div>
+	{% if isEdit %}
+			<form action="saveEdit" method="post">
+		{% else %}
+			<form action="save" method="post">
+		
+	{% endif %}
 
-			<div class="form-group">
-				<label for="fechaEgr">Fecha Egreso</label>
-				<input type="datetime-local" name="fechaEgr" id="fechaEgr" class="form-control">
-			</div>
+		<div class="form-group">
 
-			<input type="submit" value="Agregar" class="btn btn-primary">
-			<a href="/fuerarango/">
-				<button type="button" class="btn btn-secondary">Cancelar</button>
-			</a>
-		</form>
-	</div>
+{% if isEdit %}
+			<input type="hidden" name="id_internacion" id="id_internacion" class="form-control" value="{% if isEdit %}{{internacion.id}}{% endif %}">
+	{% endif %}
 
-	<div class="modal fade-lg" id="modalAddPaciente" tabindex="-1" role="dialog" aria-labelledby="modalAddPaciente" aria-hidden="true">
-
-		<div class="modal-dialog-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">
-						Seleccionar paciente
-					</h5>
-					<button class="close" data-dismiss="modal" aria-label="Cerrar">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-
-				<input type="text" class="form-control buscador" id="buscador" placeholder="Buscar afiliado">
-
-				<div class="modal-body">
-
-					<table class="table" id="allPacientes">
-
-						<thead>
-							<tr>
-								<th></th>
-								<th>Beneficio</th>
-								<th>Nombre</th>
-								<th>DNI</th>
-
-							</tr>
-						</thead>
-
-						<tbody>
-
-							{% for paciente in pacientes %}
-
-								<tr>
-									<td>
-										<button type="button" class="btn btn-primary btn-paciente" value="{{paciente.idPaciente}}" name="{{paciente.nombre}}">Seleccionar</button>
-									</td>
-									<td>{{paciente.beneficio}}</td>
-									<td>{{paciente.nombre}}</td>
-									<td>{{paciente.dni}}</td>
-
-								</tr>
-
-							{% endfor %}
-
-						</tbody>
-
-					</table>
+			<input type="hidden" name="id_paciente" id="id_paciente" class="form-control" value="{% if isEdit %}{{internacion.idPaciente}}{% endif %}">
 
 
+
+			<label for="paciente">Paciente</label>
+			<div class="input-group">
+
+				<input type="text" name="nom_paciente" id="nom_paciente" class="form-control" value="{% if isEdit %}{{internacion.nombre}}{% endif %}">
+
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modalAddPaciente" id="btnSeleccionar">Seleccionar</button>
 				</div>
 			</div>
 
 		</div>
 
-	{% endblock %}
 
-	{% block javascript %}
+		<div class="form-group">
+			<label for="fechaIng">Fecha ingreso</label>
+			<input type="datetime-local" name="fechaIng" id="fechaIng" class="form-control" value="{% if isEdit %}{{internacion.fechaIngreso|date("Y-m-d\\TH:i:s")}}{% endif %}">
+		</div>
 
-		<script src="{{base_url}}js/internacion.js"></script>
+		<div class="form-group">
+			<label for="fechaEgr">Fecha Egreso</label>
+			<input type="datetime-local" name="fechaEgr" id="fechaEgr" class="form-control" value="{% if isEdit %}{{internacion.fechaEgreso|date("Y-m-d\\TH:i:s")}}{% endif %}">
+		</div>
 
-	{% endblock %}
+		{% if isEdit %}
+			<input type="submit" value="Modificar" class="btn btn-primary">
+		{% else %}
+			<input type="submit" value="Siguiente" class="btn btn-primary">
+		{% endif %}
+
+
+		<a href="/fuerarango/">
+			<button type="button" class="btn btn-secondary">Cancelar</button>
+		</a>
+	</form>
+</div>
+
+<div class="modal fade-lg" id="modalAddPaciente" tabindex="-1" role="dialog" aria-labelledby="modalAddPaciente" aria-hidden="true">
+
+	<div class="modal-dialog-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">
+					Seleccionar paciente
+				</h5>
+				<button class="close" data-dismiss="modal" aria-label="Cerrar">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<input type="text" class="form-control buscador" id="buscador" placeholder="Buscar afiliado">
+
+			<div class="modal-body">
+
+				<table class="table" id="allPacientes">
+
+					<thead>
+						<tr>
+							<th></th>
+							<th>Beneficio</th>
+							<th>Nombre</th>
+							<th>DNI</th>
+
+						</tr>
+					</thead>
+
+					<tbody>
+
+						{% for paciente in pacientes %}
+
+							<tr>
+								<td>
+									<button type="button" class="btn btn-primary btn-paciente" value="{{paciente.idPaciente}}" name="{{paciente.nombre}}">Seleccionar</button>
+								</td>
+								<td>{{paciente.beneficio}}</td>
+								<td>{{paciente.nombre}}</td>
+								<td>{{paciente.dni}}</td>
+
+							</tr>
+
+						{% endfor %}
+
+					</tbody>
+
+				</table>
+
+
+			</div>
+		</div>
+
+	</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+	<script src="{{base_url}}js/internacion.js"></script>
+
+{% endblock %}

@@ -71,6 +71,11 @@ div .botonera-comun input {
 margin-right: .3rem;
 }
 
+table {
+   font-size: .9rem !important;
+
+}
+
 table .tablaRangosTitulo {
     text-align: center;
 
@@ -87,6 +92,11 @@ table .tablaBotonera {
 
 }
 
+
+table td.botoneraTabla {
+    text-align: center;
+    padding: .3rem 0;
+}
 
 footer {
     display: flex;

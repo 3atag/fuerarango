@@ -28,7 +28,7 @@
     <div class="row">
         <div class="col">
   
-            <table class="table tablaClasica">
+            <table class="table table-sm tablaClasica">
 
             <thead>
                     <tr>
@@ -47,10 +47,10 @@
                     <tr>
                         <td>{{internacion.beneficio}}</td>
                         <td>{{internacion.nombre}}</td>
-                        <td>{{internacion.fechaIngreso}}</td>
-                        <td>{{internacion.fechaEgreso}}</td>
-                         <td>{{internacion.idInternacion}}<a href='internaciones/edit/{{internacion.id}}'><button type="button" class="btn btn-info">Editar</button></a></td>
-                        <td><button type="button" class="btn btn-danger">Eliminar</button></td>
+                        <td>{{internacion.fechaIngreso|date("d/m/Y (H:i)") }}</td>
+                        <td>{{internacion.fechaEgreso|date("d/m/Y (H:i)")}}</td>
+                        <td class="botoneraTabla">{{internacion.idInternacion}}<a href='internaciones/edit?id={{internacion.id}}' class="btn btn-primary btn-sm" role="button"><i class="fas fa-pencil-alt"></i></a></td>
+                        <td class="botoneraTabla"><a href='#' class="btn btn-danger btn-sm" role="button"><i class="fas fa-trash-alt"></i></a></td>
 
                     </tr>
 

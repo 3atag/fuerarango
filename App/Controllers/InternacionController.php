@@ -50,7 +50,7 @@ class InternacionController extends BaseController
 
         if ($request->getMethod() == 'POST') {
 
-            
+
             $postData = $request->getParsedBody();
 
             $internacionValidator = v::key('id_paciente', v::intVal()->notEmpty())
@@ -63,6 +63,7 @@ class InternacionController extends BaseController
 
                 if ($postData['fechaEgr'] > $postData['fechaIng']) {
 
+                    
                     $internacion = new Internacion;
 
                     $internacion->idDePaciente = $postData['id_paciente'];
@@ -73,7 +74,6 @@ class InternacionController extends BaseController
 
                     $responseMessage = 'Internacion guardada con exito';
 
-                    
                 } else {
                     $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
                 }
@@ -81,8 +81,6 @@ class InternacionController extends BaseController
 
                 $responseMessage = $e->getMessage();
             }
-
-
 
             return $this->renderHTML('internacion/crear.twig', [
                 'responseMessage' => $responseMessage,
@@ -92,45 +90,92 @@ class InternacionController extends BaseController
         }
     }
 
-    /***** Mostrar formulario agregar registro *****/
+    /***** Mostrar formulario Editar registro *****/
     public function getEditInternacionAction($request)
     {
 
         $pacientes = Paciente::all();
 
-        if ($request->getMethod() == 'GET') {        
-            
-            
-            var_dump($request);
-
-            // Hector!!! Quiero recibir el id aca!!! para editar un registro ////
+        if ($request->getMethod() == 'GET') {
 
 
+            $getId = $request->getQueryParams();
 
+            $id = (int) $getId['id'];
 
+            // $internacion = Internacion::find($id);            
 
-            // $getId = $request->getQueryParams();
+            $internacion = Internacion::select('pacientes.idPaciente', 'pacientes.beneficio', 'pacientes.nombre', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
+                ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
+                ->where('internaciones.id', '=', $id)
+                ->first();
 
-            // $id = (int) $getId['id'];
+            return $this->renderHTML('internacion/crear.twig', [
 
-            // // $internacion = Internacion::find($id);            
-          
-            // $internacion = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
-            //     ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
-            //     ->where('internaciones.id', '=', $id)
-            //     ->first();
-                    
-            // return $this->renderHTML('internacion/crear.twig', [
-
-            //     'internacion' => $internacion,
-            //     'pacientes' => $pacientes,
-            //     'base_url' => $this->base_url,
-            //     'isEdit' => true
-            // ]);
-
+                'internacion' => $internacion,
+                'pacientes' => $pacientes,
+                'base_url' => $this->base_url,
+                'isEdit' => true
+            ]);
         } else {
 
             var_dump('error');
+        }
+    }
+
+    /***** Guardar registro editado *****/
+    public function postSaveEditInternacionAction($request)
+    {
+
+        $responseMessage  = null;
+
+        if ($request->getMethod() == 'POST') {
+
+            $postData = $request->getParsedBody();
+
+            $internacionValidator = v::key('id_internacion', v::intVal()->notEmpty())
+                ->key('id_paciente', v::intVal()->notEmpty())
+                ->key('fechaIng', v::date())
+                ->key('fechaEgr', v::date());
+
+            try {
+
+                $internacionValidator->assert($postData);
+
+
+                if ($postData['fechaEgr'] > $postData['fechaIng']) {
+
+
+                    $internacion = Internacion::find($postData['id_internacion']);
+                    
+                    $internacion->idDePaciente = $postData['id_paciente'];
+                    $internacion->fechaIngreso = $postData['fechaIng'];
+                    $internacion->fechaEgreso = $postData['fechaEgr'];
+                    $internacion->save();                
+
+                    // $responseMessage = 'Internacion actualizada con exito';
+
+                    var_dump('exito');
+                } else {
+
+                    // $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
+
+                    var_dump('fracaso');
+                }
+            } catch (\Exception $e) {
+
+
+                var_dump('hola' . $e->getMessage());
+
+                // $responseMessage = $e->getMessage();
+            }
+
+
+
+            // return $this->renderHTML('internacion/crear.twig', [
+            //     'responseMessage' => $responseMessage,              
+            //     'base_url' => $this->base_url
+            // ]);
         }
     }
 }

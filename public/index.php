@@ -97,12 +97,17 @@
         'action' => 'postSaveInternacionAction'
     ]);
 
+    $map->post('saveEditInternacion', '/fuerarango/internaciones/saveEdit', [
+        'controller' => 'App\Controllers\InternacionController',
+        'action' => 'postSaveEditInternacionAction'
+    ]);
+
     $map->get('index', '/fuerarango/', [
         'controller' => 'App\Controllers\InternacionController',
         'action' => 'getAllInternacionAction'
     ]);
 
-    $map->get('editInternacion', '/fuerarango/internaciones/edit/{id}', [        
+    $map->get('editInternacion', '/fuerarango/internaciones/edit', [        
         'controller' => 'App\Controllers\InternacionController',
         'action' => 'getEditInternacionAction'
     ]);

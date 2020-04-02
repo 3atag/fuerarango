@@ -14,4 +14,6 @@ class Internacion extends Model
     
     protected $table = 'internaciones';
 
+    protected $guarded = [];
+
 }

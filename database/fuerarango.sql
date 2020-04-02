@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-04-2020 a las 20:28:13
+-- Tiempo de generación: 02-04-2020 a las 22:02:14
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.1
 
@@ -55,10 +55,9 @@ CREATE TABLE `internaciones` (
 --
 
 INSERT INTO `internaciones` (`id`, `idDePaciente`, `fechaIngreso`, `fechaEgreso`, `created_at`, `updated_at`) VALUES
-(1, 1, '2020-01-19 11:40:00', '2020-01-29 08:30:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(22, 1, '2020-01-31 07:30:00', '2020-01-31 10:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(23, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(24, 2, '2020-02-01 12:30:00', '2020-02-02 13:30:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(24, 2, '2020-02-02 13:00:00', '2020-02-02 13:30:00', '0000-00-00 00:00:00', '2020-04-02 21:00:22'),
+(26, 3, '2020-03-12 12:00:00', '2020-03-13 12:30:00', '2020-04-01 21:22:22', '2020-04-02 21:00:41'),
+(29, 1, '2020-01-29 08:00:00', '2020-01-30 12:30:00', '2020-04-02 19:46:41', '2020-04-02 21:01:42');
 
 -- --------------------------------------------------------
 
@@ -120,7 +119,7 @@ INSERT INTO `practicas` (`idPractica`, `codigo`, `descripcion`, `cantMaxDiaria`,
 --
 
 CREATE TABLE `practicas_realizadas` (
-  `idPractRealizada` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `idDeInterna` int(11) NOT NULL,
   `idDePractica` smallint(6) NOT NULL,
   `fechaHora` datetime NOT NULL,
@@ -161,7 +160,7 @@ ALTER TABLE `practicas`
 -- Indices de la tabla `practicas_realizadas`
 --
 ALTER TABLE `practicas_realizadas`
-  ADD PRIMARY KEY (`idPractRealizada`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `idDePractica` (`idDePractica`),
   ADD KEY `idDeInterna` (`idDeInterna`);
 
@@ -173,7 +172,7 @@ ALTER TABLE `practicas_realizadas`
 -- AUTO_INCREMENT de la tabla `internaciones`
 --
 ALTER TABLE `internaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`
@@ -191,7 +190,7 @@ ALTER TABLE `practicas`
 -- AUTO_INCREMENT de la tabla `practicas_realizadas`
 --
 ALTER TABLE `practicas_realizadas`
-  MODIFY `idPractRealizada` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
