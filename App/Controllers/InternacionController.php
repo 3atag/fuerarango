@@ -63,17 +63,41 @@ class InternacionController extends BaseController
 
                 if ($postData['fechaEgr'] > $postData['fechaIng']) {
 
-                    
-                    $internacion = new Internacion;
+                    /* Evaluamos que no haya una internacion de el paciente entre esas fecha */
+                    $yaInternado = false;
 
-                    $internacion->idDePaciente = $postData['id_paciente'];
-                    $internacion->fechaIngreso = $postData['fechaIng'];
-                    $internacion->fechaEgreso = $postData['fechaEgr'];
+                    $fechaIngresoUsuario = strtotime($postData['fechaIng']);
 
-                    $internacion->save();
 
-                    $responseMessage = 'Internacion guardada con exito';
+                    $internacionesPaciente = Internacion::where('idDePaciente', '=', $postData['id_paciente'])->get();
 
+                    foreach ($internacionesPaciente as $internacion) {
+
+                        $fechaIngresoInternacion = strtotime($internacion['fechaIngreso']);
+                        $fechaEgresoInternacion = strtotime($internacion['fechaEgreso']);
+
+                        if ($fechaIngresoUsuario >= $fechaIngresoInternacion && $fechaIngresoUsuario <= $fechaEgresoInternacion) {
+
+                            $yaInternado = true;
+                        }
+                    }
+
+                    if ($yaInternado == true) {
+
+                        $responseMessage = 'El paciente estuvo internado en la fecha de ingreso ingresada';
+                        
+                    } else {
+
+                        $internacion = new Internacion;
+
+                        $internacion->idDePaciente = $postData['id_paciente'];
+                        $internacion->fechaIngreso = $postData['fechaIng'];
+                        $internacion->fechaEgreso = $postData['fechaEgr'];
+
+                        $internacion->save();
+
+                        $responseMessage = 'Internacion guardada con exito';
+                    }
                 } else {
                     $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
                 }
@@ -147,11 +171,11 @@ class InternacionController extends BaseController
 
 
                     $internacion = Internacion::find($postData['id_internacion']);
-                    
+
                     $internacion->idDePaciente = $postData['id_paciente'];
                     $internacion->fechaIngreso = $postData['fechaIng'];
                     $internacion->fechaEgreso = $postData['fechaEgr'];
-                    $internacion->save();                
+                    $internacion->save();
 
                     // $responseMessage = 'Internacion actualizada con exito';
 
