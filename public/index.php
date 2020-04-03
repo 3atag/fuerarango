@@ -7,6 +7,8 @@
 
     use Illuminate\Database\Capsule\Manager as Capsule;
 
+    use Laminas\Diactoros\Response\RedirectResponse;
+
     $capsule = new Capsule;
 
     $capsule->addConnection([
@@ -119,7 +121,7 @@
 
     if (!$route) {
 
-        echo 'no route';
+       echo 'no route';
 
     } else {
 
@@ -130,6 +132,13 @@
         $controller = new $controllerName;
         $response = $controller->$actionName($request);
 
+        foreach ($response->getHeaders() as $name => $values) {
+
+            foreach ($values as $value) {
+                header(sprintf('%s: %s', $name, $value), false);
+            }
+        }
+        http_response_code($response->getStatusCode());
         echo $response->getBody();
 
     }

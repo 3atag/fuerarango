@@ -60,8 +60,6 @@
                 idPaciente.value = btnPaciente[i].value;
                 nombrePaciente.value = btnPaciente[i].name;
                 $('#modalAddPaciente').modal('hide');
-                nombrePaciente.readOnly = true; 
-
             })
         }
 

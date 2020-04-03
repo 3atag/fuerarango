@@ -57,17 +57,19 @@ class InternacionController extends BaseController
                 ->key('fechaIng', v::date())
                 ->key('fechaEgr', v::date());
 
+            $camposIngresados = null;
+
             try {
 
                 $internacionValidator->assert($postData);
 
                 if ($postData['fechaEgr'] > $postData['fechaIng']) {
 
-                    /* Evaluamos que no haya una internacion de el paciente entre esas fecha */
-                    $yaInternado = false;
+                    /* Evaluamos que no haya una internacion del paciente entre las fechas ingresadas */
+                    
+                    $yaInternado = false;                    
 
                     $fechaIngresoUsuario = strtotime($postData['fechaIng']);
-
 
                     $internacionesPaciente = Internacion::where('idDePaciente', '=', $postData['id_paciente'])->get();
 
@@ -79,6 +81,12 @@ class InternacionController extends BaseController
                         if ($fechaIngresoUsuario >= $fechaIngresoInternacion && $fechaIngresoUsuario <= $fechaEgresoInternacion) {
 
                             $yaInternado = true;
+
+                            $camposIngresados = array ('id_paciente' => $postData['id_paciente'],
+                                                       'nom_paciente' => $postData['nom_paciente'],
+                                                       'fechaIng' => $postData['fechaIng'],
+                                                       'fechaEgr' => $postData['fechaEgr']);
+
                         }
                     }
 
@@ -109,7 +117,8 @@ class InternacionController extends BaseController
             return $this->renderHTML('internacion/crear.twig', [
                 'responseMessage' => $responseMessage,
                 'pacientes' => $pacientes,
-                'base_url' => $this->base_url
+                'base_url' => $this->base_url,
+                'camposIngresados' => $camposIngresados
             ]);
         }
     }
@@ -150,6 +159,7 @@ class InternacionController extends BaseController
     /***** Guardar registro editado *****/
     public function postSaveEditInternacionAction($request)
     {
+        $pacientes = Paciente::all();
 
         $responseMessage  = null;
 
@@ -162,44 +172,76 @@ class InternacionController extends BaseController
                 ->key('fechaIng', v::date())
                 ->key('fechaEgr', v::date());
 
+            $camposIngresados = null;
+
             try {
 
                 $internacionValidator->assert($postData);
 
-
                 if ($postData['fechaEgr'] > $postData['fechaIng']) {
 
+                     /* Evaluamos que no haya una internacion del paciente entre las fechas ingresadas */
+                    
+                     $yaInternado = false;                    
 
-                    $internacion = Internacion::find($postData['id_internacion']);
+                     $fechaIngresoUsuario = strtotime($postData['fechaIng']);
+ 
+                     $internacionesPaciente = Internacion::where('idDePaciente', '=', $postData['id_paciente'])->get();
+ 
+                     foreach ($internacionesPaciente as $internacion) {
+ 
+                         $fechaIngresoInternacion = strtotime($internacion['fechaIngreso']);
+                         $fechaEgresoInternacion = strtotime($internacion['fechaEgreso']);
+ 
+                         if ($fechaIngresoUsuario >= $fechaIngresoInternacion && $fechaIngresoUsuario <= $fechaEgresoInternacion) {
+ 
+                             $yaInternado = true;
+ 
+                             $camposIngresados = array ('id_paciente' => $postData['id_paciente'],
+                                                        'nom_paciente' => $postData['nom_paciente'],
+                                                        'fechaIng' => $postData['fechaIng'],
+                                                        'fechaEgr' => $postData['fechaEgr']);
+ 
+                         }
+                     }
 
-                    $internacion->idDePaciente = $postData['id_paciente'];
-                    $internacion->fechaIngreso = $postData['fechaIng'];
-                    $internacion->fechaEgreso = $postData['fechaEgr'];
-                    $internacion->save();
+                     if ($yaInternado == true) {
 
-                    // $responseMessage = 'Internacion actualizada con exito';
+                        $responseMessage = 'El paciente estuvo internado en la fecha de ingreso ingresada';
+                        
+                    } else {
 
-                    var_dump('exito');
+                        $internacion = Internacion::find($postData['id_internacion']);
+
+                        $internacion->idDePaciente = $postData['id_paciente'];
+                        $internacion->fechaIngreso = $postData['fechaIng'];
+                        $internacion->fechaEgreso = $postData['fechaEgr'];
+                        $internacion->save();
+    
+                        return new RedirectResponse('/fuerarango');                       
+
+                    }                  
+
+
                 } else {
 
-                    // $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
-
-                    var_dump('fracaso');
+                    $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
+                    
                 }
+
             } catch (\Exception $e) {
+              
+                $responseMessage = $e->getMessage();
 
-
-                var_dump('hola' . $e->getMessage());
-
-                // $responseMessage = $e->getMessage();
             }
 
+            return $this->renderHTML('internacion/crear.twig', [
+                'responseMessage' => $responseMessage,
+                'pacientes' => $pacientes,             
+                'base_url' => $this->base_url,
+                'camposIngresados' => $camposIngresados
 
-
-            // return $this->renderHTML('internacion/crear.twig', [
-            //     'responseMessage' => $responseMessage,              
-            //     'base_url' => $this->base_url
-            // ]);
+            ]);
         }
     }
 }
