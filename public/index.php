@@ -125,6 +125,12 @@
 
     } else {
 
+        foreach ($route->atributtes as $attibute => $values) {
+
+            $request = $request->withAttribute($attribute,$value);
+            
+        }
+
         $handlerData = $route->handler;
         $controllerName = $handlerData['controller'];
         $actionName = $handlerData['action'];
@@ -138,6 +144,7 @@
                 header(sprintf('%s: %s', $name, $value), false);
             }
         }
+
         http_response_code($response->getStatusCode());
         echo $response->getBody();
 
