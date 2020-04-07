@@ -125,31 +125,34 @@ class InternacionController extends BaseController
 
     /***** Mostrar formulario Editar registro *****/
     public function getEditInternacionAction($request)
-    {
-
-        $pacientes = Paciente::all();
+    {     
 
         if ($request->getMethod() == 'GET') {
 
-
-            $getId = $request->getQueryParams();
-
-            $id = (int) $getId['id'];
-
-            // $internacion = Internacion::find($id);            
+            // Recibo parametros desde la url
+            $id = (int) $request->getAttribute('id');
 
             $internacion = Internacion::select('pacientes.idPaciente', 'pacientes.beneficio', 'pacientes.nombre', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
                 ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
                 ->where('internaciones.id', '=', $id)
                 ->first();
 
-            return $this->renderHTML('internacion/crear.twig', [
+            
+            if ($internacion === null) {
 
-                'internacion' => $internacion,
-                'pacientes' => $pacientes,
-                'base_url' => $this->base_url,
-                'isEdit' => true
-            ]);
+                return new RedirectResponse('/fuerarango');
+
+            } else {
+
+                return $this->renderHTML('internacion/crear.twig', [
+
+                    'internacion' => $internacion,
+                    'base_url' => $this->base_url,
+                    'isEdit' => true
+                ]);
+            }
+
+            
         } else {
 
             var_dump('error');
@@ -159,8 +162,7 @@ class InternacionController extends BaseController
     /***** Guardar registro editado *****/
     public function postSaveEditInternacionAction($request)
     {
-        $pacientes = Paciente::all();
-
+  
         $responseMessage  = null;
 
         if ($request->getMethod() == 'POST') {
@@ -187,40 +189,48 @@ class InternacionController extends BaseController
                      $fechaIngresoUsuario = strtotime($postData['fechaIng']);
  
                      $internacionesPaciente = Internacion::where('idDePaciente', '=', $postData['id_paciente'])->get();
- 
-                     foreach ($internacionesPaciente as $internacion) {
- 
-                         $fechaIngresoInternacion = strtotime($internacion['fechaIngreso']);
-                         $fechaEgresoInternacion = strtotime($internacion['fechaEgreso']);
- 
-                         if ($fechaIngresoUsuario >= $fechaIngresoInternacion && $fechaIngresoUsuario <= $fechaEgresoInternacion) {
- 
-                             $yaInternado = true;
- 
-                             $camposIngresados = array ('id_paciente' => $postData['id_paciente'],
-                                                        'nom_paciente' => $postData['nom_paciente'],
-                                                        'fechaIng' => $postData['fechaIng'],
-                                                        'fechaEgr' => $postData['fechaEgr']);
- 
-                         }
+
+                     
+                     foreach ($internacionesPaciente as $internacion) {                        
+
+                        if ($internacion->id != (int) $postData['id_internacion']) {
+                            // Si la internacion guardada en la base es distinta a la que se va a editar
+
+                            $fechaIngresoInternacion = strtotime($internacion['fechaIngreso']);
+                            $fechaEgresoInternacion = strtotime($internacion['fechaEgreso']);
+    
+                            if ($fechaIngresoUsuario >= $fechaIngresoInternacion && $fechaIngresoUsuario <= $fechaEgresoInternacion) {
+    
+                                $yaInternado = true;
+    
+                                $camposIngresados = array ('id_paciente' => $postData['id_paciente'],
+                                                           'nom_paciente' => $postData['nom_paciente'],
+                                                           'fechaIng' => $postData['fechaIng'],
+                                                           'fechaEgr' => $postData['fechaEgr']);    
+                            }    
+    
+                         } 
+                        
+                         if ($yaInternado == true) {
+
+                            $responseMessage = 'El paciente estuvo internado en la fecha de ingreso ingresada';
+                            
+                        } else {
+    
+                            $internacion = Internacion::find($postData['id_internacion']);
+    
+                            $internacion->idDePaciente = $postData['id_paciente']; // no va
+                            $internacion->fechaIngreso = $postData['fechaIng'];
+                            $internacion->fechaEgreso = $postData['fechaEgr'];
+                            $internacion->save();
+        
+                            return new RedirectResponse('/fuerarango');                       
+    
+                        }    
+                        
                      }
 
-                     if ($yaInternado == true) {
-
-                        $responseMessage = 'El paciente estuvo internado en la fecha de ingreso ingresada';
-                        
-                    } else {
-
-                        $internacion = Internacion::find($postData['id_internacion']);
-
-                        $internacion->idDePaciente = $postData['id_paciente'];
-                        $internacion->fechaIngreso = $postData['fechaIng'];
-                        $internacion->fechaEgreso = $postData['fechaEgr'];
-                        $internacion->save();
-    
-                        return new RedirectResponse('/fuerarango');                       
-
-                    }                  
+                                  
 
 
                 } else {
@@ -236,8 +246,7 @@ class InternacionController extends BaseController
             }
 
             return $this->renderHTML('internacion/crear.twig', [
-                'responseMessage' => $responseMessage,
-                'pacientes' => $pacientes,             
+                'responseMessage' => $responseMessage,                     
                 'base_url' => $this->base_url,
                 'camposIngresados' => $camposIngresados
 

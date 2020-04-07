@@ -98,20 +98,20 @@
         'controller' => 'App\Controllers\InternacionController',
         'action' => 'postSaveInternacionAction'
     ]);
-
-    $map->post('saveEditInternacion', '/fuerarango/internaciones/saveEdit', [
-        'controller' => 'App\Controllers\InternacionController',
-        'action' => 'postSaveEditInternacionAction'
-    ]);
-
+   
     $map->get('index', '/fuerarango/', [
         'controller' => 'App\Controllers\InternacionController',
         'action' => 'getAllInternacionAction'
     ]);
 
-    $map->get('editInternacion', '/fuerarango/internaciones/edit', [        
+    $map->get('editInternacion', '/fuerarango/internaciones/edit/{id}', [        
         'controller' => 'App\Controllers\InternacionController',
         'action' => 'getEditInternacionAction'
+    ]);
+
+    $map->post('saveEditInternacion', '/fuerarango/internaciones/edit/saveEdit', [
+        'controller' => 'App\Controllers\InternacionController',
+        'action' => 'postSaveEditInternacionAction'
     ]);
 
     
@@ -124,9 +124,10 @@
        echo 'no route';
 
     } else {
+        // Recorremos los atributos de la ruta (los valores que traemos por url)
+        foreach ($route->attributes as $attribute => $value) {
 
-        foreach ($route->atributtes as $attibute => $values) {
-
+            // Agregamos al request el atributo y su valor en cada iteracion, una vez por atributo
             $request = $request->withAttribute($attribute,$value);
             
         }

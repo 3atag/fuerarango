@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-04-2020 a las 22:02:14
+-- Tiempo de generación: 07-04-2020 a las 16:00:33
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.1
 
@@ -57,7 +57,8 @@ CREATE TABLE `internaciones` (
 INSERT INTO `internaciones` (`id`, `idDePaciente`, `fechaIngreso`, `fechaEgreso`, `created_at`, `updated_at`) VALUES
 (24, 2, '2020-02-02 13:00:00', '2020-02-02 13:30:00', '0000-00-00 00:00:00', '2020-04-02 21:00:22'),
 (26, 3, '2020-03-12 12:00:00', '2020-03-13 12:30:00', '2020-04-01 21:22:22', '2020-04-02 21:00:41'),
-(29, 1, '2020-01-29 08:00:00', '2020-01-30 12:30:00', '2020-04-02 19:46:41', '2020-04-02 21:01:42');
+(29, 1, '2020-01-29 08:00:00', '2020-01-30 12:30:00', '2020-04-02 19:46:41', '2020-04-02 21:01:42'),
+(35, 3, '2020-04-06 12:35:00', '2020-04-07 08:35:00', '2020-04-07 15:23:55', '2020-04-07 15:54:26');
 
 -- --------------------------------------------------------
 
@@ -172,7 +173,7 @@ ALTER TABLE `practicas_realizadas`
 -- AUTO_INCREMENT de la tabla `internaciones`
 --
 ALTER TABLE `internaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`
