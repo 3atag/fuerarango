@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-04-2020 a las 16:00:33
+-- Tiempo de generación: 07-04-2020 a las 22:42:53
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.1
 
@@ -58,7 +58,10 @@ INSERT INTO `internaciones` (`id`, `idDePaciente`, `fechaIngreso`, `fechaEgreso`
 (24, 2, '2020-02-02 13:00:00', '2020-02-02 13:30:00', '0000-00-00 00:00:00', '2020-04-02 21:00:22'),
 (26, 3, '2020-03-12 12:00:00', '2020-03-13 12:30:00', '2020-04-01 21:22:22', '2020-04-02 21:00:41'),
 (29, 1, '2020-01-29 08:00:00', '2020-01-30 12:30:00', '2020-04-02 19:46:41', '2020-04-02 21:01:42'),
-(35, 3, '2020-04-06 12:35:00', '2020-04-07 08:35:00', '2020-04-07 15:23:55', '2020-04-07 15:54:26');
+(35, 3, '2020-03-12 11:00:00', '2020-03-12 20:00:00', '2020-04-07 15:23:55', '2020-04-07 22:20:10'),
+(36, 1, '2020-04-01 12:00:00', '2020-04-02 12:30:00', '2020-04-07 22:00:10', '2020-04-07 22:00:10'),
+(37, 4, '2020-03-29 15:40:00', '2020-03-31 12:00:00', '2020-04-07 22:12:46', '2020-04-07 22:12:46'),
+(39, 4, '2020-04-06 12:00:00', '2020-04-07 12:30:00', '2020-04-07 22:30:36', '2020-04-07 22:30:36');
 
 -- --------------------------------------------------------
 
@@ -83,7 +86,12 @@ CREATE TABLE `pacientes` (
 INSERT INTO `pacientes` (`idPaciente`, `nombre`, `beneficio`, `dni`, `activo`, `created_at`, `updated_at`) VALUES
 (1, 'BRUN CHRISTIAN', '15087892010600', 5372796, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, 'ALVAREZ ANA MARIA', '15501025950200', 9984183, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 'SAGARDOY CARLOS ALBERTO', '15042175200700', 7637845, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(3, 'SAGARDOY CARLOS ALBERTO', '15042175200700', 7637845, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 'LUQUEZ NORMA NOEMI', '09533623210600', 1453763, 1, '2020-04-07 22:12:09', '2020-04-07 22:12:09'),
+(5, 'STADLER LUISA ELENA', '15582761480500', 4207410, 1, '2020-04-07 22:40:21', '2020-04-07 22:40:21'),
+(6, 'HERRERA JUAN CARLOS', '15048024660600', 5386552, 1, '2020-04-07 22:40:55', '2020-04-07 22:40:55'),
+(7, 'RIVERO RUBEN TOMAS', '15054346230000', 5390064, 1, '2020-04-07 22:42:16', '2020-04-07 22:42:16'),
+(8, 'GUIDO ELSA MIRTA', '15085849680200', 8779837, 1, '2020-04-07 22:42:39', '2020-04-07 22:42:39');
 
 -- --------------------------------------------------------
 
@@ -173,13 +181,13 @@ ALTER TABLE `practicas_realizadas`
 -- AUTO_INCREMENT de la tabla `internaciones`
 --
 ALTER TABLE `internaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `idPaciente` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idPaciente` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `practicas`

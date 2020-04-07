@@ -66,10 +66,10 @@ class InternacionController extends BaseController
                 if ($postData['fechaEgr'] > $postData['fechaIng']) {
 
                     /* Evaluamos que no haya una internacion del paciente entre las fechas ingresadas */
-                    
-                    $yaInternado = false;                    
+                    $yaInternado = false;
 
                     $fechaIngresoUsuario = strtotime($postData['fechaIng']);
+                    $fechaEgresoUsuario = strtotime($postData['fechaEgr']);
 
                     $internacionesPaciente = Internacion::where('idDePaciente', '=', $postData['id_paciente'])->get();
 
@@ -78,22 +78,29 @@ class InternacionController extends BaseController
                         $fechaIngresoInternacion = strtotime($internacion['fechaIngreso']);
                         $fechaEgresoInternacion = strtotime($internacion['fechaEgreso']);
 
-                        if ($fechaIngresoUsuario >= $fechaIngresoInternacion && $fechaIngresoUsuario <= $fechaEgresoInternacion) {
+                        if (($fechaIngresoUsuario >= $fechaIngresoInternacion && $fechaIngresoUsuario <= $fechaEgresoInternacion) || 
+                        ($fechaEgresoUsuario >= $fechaIngresoInternacion && $fechaEgresoUsuario <= $fechaEgresoInternacion)) {
+                            
+                            // Si las fechas ingresadas se encuentran dentro del rango de una internacion anterior
 
                             $yaInternado = true;
 
-                            $camposIngresados = array ('id_paciente' => $postData['id_paciente'],
-                                                       'nom_paciente' => $postData['nom_paciente'],
-                                                       'fechaIng' => $postData['fechaIng'],
-                                                       'fechaEgr' => $postData['fechaEgr']);
-
+                        break;
                         }
-                    }
 
+                    }
+                  
                     if ($yaInternado == true) {
 
                         $responseMessage = 'El paciente estuvo internado en la fecha de ingreso ingresada';
-                        
+
+                        $camposIngresados = array(
+                            'id_paciente' => $postData['id_paciente'],
+                            'nom_paciente' => $postData['nom_paciente'],
+                            'fechaIng' => $postData['fechaIng'],
+                            'fechaEgr' => $postData['fechaEgr']
+                        );
+
                     } else {
 
                         $internacion = new Internacion;
@@ -105,9 +112,15 @@ class InternacionController extends BaseController
                         $internacion->save();
 
                         $responseMessage = 'Internacion guardada con exito';
+
+                        return new RedirectResponse('/fuerarango');
+
                     }
+
                 } else {
+
                     $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
+
                 }
             } catch (\Exception $e) {
 
@@ -125,7 +138,7 @@ class InternacionController extends BaseController
 
     /***** Mostrar formulario Editar registro *****/
     public function getEditInternacionAction($request)
-    {     
+    {
 
         if ($request->getMethod() == 'GET') {
 
@@ -137,7 +150,7 @@ class InternacionController extends BaseController
                 ->where('internaciones.id', '=', $id)
                 ->first();
 
-            
+
             if ($internacion === null) {
 
                 return new RedirectResponse('/fuerarango');
@@ -151,8 +164,6 @@ class InternacionController extends BaseController
                     'isEdit' => true
                 ]);
             }
-
-            
         } else {
 
             var_dump('error');
@@ -162,7 +173,7 @@ class InternacionController extends BaseController
     /***** Guardar registro editado *****/
     public function postSaveEditInternacionAction($request)
     {
-  
+
         $responseMessage  = null;
 
         if ($request->getMethod() == 'POST') {
@@ -182,72 +193,77 @@ class InternacionController extends BaseController
 
                 if ($postData['fechaEgr'] > $postData['fechaIng']) {
 
-                     /* Evaluamos que no haya una internacion del paciente entre las fechas ingresadas */
-                    
-                     $yaInternado = false;                    
+                    /* Evaluamos que no haya una internacion del paciente entre las fechas ingresadas */
 
-                     $fechaIngresoUsuario = strtotime($postData['fechaIng']);
- 
-                     $internacionesPaciente = Internacion::where('idDePaciente', '=', $postData['id_paciente'])->get();
+                    $yaInternado = false;
 
-                     
-                     foreach ($internacionesPaciente as $internacion) {                        
+                    $fechaIngresoUsuario = strtotime($postData['fechaIng']);
+
+                    $internacionesPaciente = Internacion::where('idDePaciente', '=', $postData['id_paciente'])->get();
+
+
+                    foreach ($internacionesPaciente as $internacion) {
 
                         if ($internacion->id != (int) $postData['id_internacion']) {
                             // Si la internacion guardada en la base es distinta a la que se va a editar
 
                             $fechaIngresoInternacion = strtotime($internacion['fechaIngreso']);
                             $fechaEgresoInternacion = strtotime($internacion['fechaEgreso']);
-    
+
                             if ($fechaIngresoUsuario >= $fechaIngresoInternacion && $fechaIngresoUsuario <= $fechaEgresoInternacion) {
-    
+
+                                // Si las fechas ingresadas se encuentran dentro del rango de una internacion anterior
+
                                 $yaInternado = true;
-    
-                                $camposIngresados = array ('id_paciente' => $postData['id_paciente'],
-                                                           'nom_paciente' => $postData['nom_paciente'],
-                                                           'fechaIng' => $postData['fechaIng'],
-                                                           'fechaEgr' => $postData['fechaEgr']);    
-                            }    
-    
-                         } 
-                        
-                         if ($yaInternado == true) {
+                                
+                            break;
 
-                            $responseMessage = 'El paciente estuvo internado en la fecha de ingreso ingresada';
-                            
-                        } else {
-    
-                            $internacion = Internacion::find($postData['id_internacion']);
-    
-                            $internacion->idDePaciente = $postData['id_paciente']; // no va
-                            $internacion->fechaIngreso = $postData['fechaIng'];
-                            $internacion->fechaEgreso = $postData['fechaEgr'];
-                            $internacion->save();
-        
-                            return new RedirectResponse('/fuerarango');                       
-    
-                        }    
-                        
-                     }
+                            }
 
-                                  
+                        }
 
+                    } // Fin del foreach
+
+                    
+                    if ($yaInternado === true) {
+
+                        $responseMessage = 'El paciente estuvo internado en la fecha de ingreso ingresada';
+
+                        $camposIngresados = array(
+                                        'id_internacion' => $postData['id_internacion'],
+                                        'id_paciente' => $postData['id_paciente'],
+                                        'nom_paciente' => $postData['nom_paciente'],
+                                        'fechaIng' => $postData['fechaIng'],
+                                        'fechaEgr' => $postData['fechaEgr']
+                                        );   
+
+                    } else {
+
+                        $internacion->fechaIngreso = $postData['fechaIng'];
+                        $internacion->fechaEgreso = $postData['fechaEgr'];
+
+                        $internacion->save();
+
+                        $responseMessage = 'Internacion Editada con exito';
+
+                        return new RedirectResponse('/fuerarango');
+
+                    }
+                    
 
                 } else {
 
                     $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
-                    
                 }
-
             } catch (\Exception $e) {
-              
-                $responseMessage = $e->getMessage();
 
+                $responseMessage = $e->getMessage();
             }
 
             return $this->renderHTML('internacion/crear.twig', [
-                'responseMessage' => $responseMessage,                     
+                'responseMessage' => $responseMessage,
                 'base_url' => $this->base_url,
+                'isEdit' => true,
                 'camposIngresados' => $camposIngresados
 
             ]);

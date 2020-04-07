@@ -7,31 +7,37 @@
 		{% set tituloAction = 'Agregar' %}
 		{% set formAction = 'save' %}	
 		{% set submitValue = 'Siguiente' %}		
+		{% set statusButtonSelectPaciente = '' %}
+
+
 
 		{% if isEdit %}
 
 			{% set tituloAction = 'Editar' %}
 			{% set formAction = 'saveEdit' %}
-			{% set submitValue = 'Modificar' %}		
+			{% set submitValue = 'Modificar' %}	
+			{% set statusButtonSelectPaciente = 'disabled' %}		
 
 			{% set id_internacionValue = internacion.id %}
 			{% set id_pacienteValue = internacion.idPaciente %}
 			{% set nom_pacienteValue = internacion.nombre %}
 			{% set fechaIngValue = internacion.fechaIngreso|date("Y-m-d\\TH:i:s") %}
-			{% set fechaEgrValue = internacion.fechaEgreso|date("Y-m-d\\TH:i:s") %}
+			{% set fechaEgrValue = internacion.fechaEgreso|date("Y-m-d\\TH:i:s") %}		
 		
 		{% endif %} 
 
-		
 		{% if camposIngresados %}
 
-			{% set id_pacienteValue = camposIngresados.id_paciente %}
-			{% set nom_pacienteValue = camposIngresados.nom_paciente %}
-			{% set fechaIngValue = camposIngresados.fechaIng %}
-			{% set fechaEgrValue = camposIngresados.fechaEgr %}
+				{% set id_internacionValue = camposIngresados.id_internacion %}
+				{% set id_pacienteValue = camposIngresados.id_paciente %}
+				{% set nom_pacienteValue = camposIngresados.nom_paciente %}
+				{% set fechaIngValue = camposIngresados.fechaIng %}
+				{% set fechaEgrValue = camposIngresados.fechaEgr %}
 
 		{% endif %} 
 
+		
+		
 		
 		<h4>{{ tituloAction }} Internacion</h4>
 
@@ -61,7 +67,7 @@
 
 						<div class="input-group-append">
 						
-							<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modalAddPaciente" id="btnSeleccionar">Seleccionar</button>
+							<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modalAddPaciente" id="btnSeleccionar" {{statusButtonSelectPaciente}}>Seleccionar</button>
 					
 						</div>
 			
