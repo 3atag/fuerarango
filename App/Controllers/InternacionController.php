@@ -48,8 +48,11 @@ class InternacionController extends BaseController
 
         $responseMessage  = null;
 
-        if ($request->getMethod() == 'POST') {
+        $hoy = date_create();
+        $fechaActual = date_timestamp_get($hoy);
 
+
+        if ($request->getMethod() == 'POST') {
 
             $postData = $request->getParsedBody();
 
@@ -57,16 +60,29 @@ class InternacionController extends BaseController
                 ->key('fechaIng', v::date())
                 ->key('fechaEgr', v::date());
 
-            $camposIngresados = null;
+            $camposIngresados = null;            
 
             try {
 
                 $internacionValidator->assert($postData);
 
-                if ($postData['fechaEgr'] > $postData['fechaIng']) {
+                if (strtotime($postData['fechaIng']) > $fechaActual ||
+                    strtotime($postData['fechaEgr']) > $fechaActual) {
+
+                    $responseMessage = 'La fechas de ingreso y egreso no puede ser mayores a la fecha actual';
+
+                    $camposIngresados = array(
+                        'id_paciente' => $postData['id_paciente'],
+                        'nom_paciente' => $postData['nom_paciente'],
+                        'fechaIng' => $postData['fechaIng'],
+                        'fechaEgr' => $postData['fechaEgr']
+                    );
+         
+
+                } elseif ($postData['fechaEgr'] > $postData['fechaIng']) {
 
                     /* Evaluamos que no haya una internacion del paciente entre las fechas ingresadas */
-                    $yaInternado = false;
+                    $yaInternado = null;
 
                     $fechaIngresoUsuario = strtotime($postData['fechaIng']);
                     $fechaEgresoUsuario = strtotime($postData['fechaEgr']);
@@ -78,17 +94,24 @@ class InternacionController extends BaseController
                         $fechaIngresoInternacion = strtotime($internacion['fechaIngreso']);
                         $fechaEgresoInternacion = strtotime($internacion['fechaEgreso']);
 
-                        if (($fechaIngresoUsuario >= $fechaIngresoInternacion && $fechaIngresoUsuario <= $fechaEgresoInternacion) || 
-                        ($fechaEgresoUsuario >= $fechaIngresoInternacion && $fechaEgresoUsuario <= $fechaEgresoInternacion)) {
+                        if (($fechaIngresoUsuario < $fechaIngresoInternacion &&
+                            $fechaEgresoUsuario < $fechaIngresoInternacion) || 
+                            ($fechaIngresoUsuario > $fechaEgresoInternacion &&
+                            $fechaEgresoUsuario > $fechaEgresoInternacion)) {
                             
                             // Si las fechas ingresadas se encuentran dentro del rango de una internacion anterior
+
+                            $yaInternado = false;
+
+                        
+                        } else {
 
                             $yaInternado = true;
 
                         break;
                         }
 
-                    }
+                    } // fin del foreach
                   
                     if ($yaInternado == true) {
 
@@ -121,10 +144,24 @@ class InternacionController extends BaseController
 
                     $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
 
+                    $camposIngresados = array(
+                        'id_paciente' => $postData['id_paciente'],
+                        'nom_paciente' => $postData['nom_paciente'],
+                        'fechaIng' => $postData['fechaIng'],
+                        'fechaEgr' => $postData['fechaEgr']
+                    );
                 }
+
             } catch (\Exception $e) {
 
-                $responseMessage = $e->getMessage();
+                $responseMessage = "Todos los campos obligatorios";
+
+                $camposIngresados = array(
+                    'id_paciente' => $postData['id_paciente'],
+                    'nom_paciente' => $postData['nom_paciente'],
+                    'fechaIng' => $postData['fechaIng'],
+                    'fechaEgr' => $postData['fechaEgr']
+                );
             }
 
             return $this->renderHTML('internacion/crear.twig', [
@@ -176,6 +213,10 @@ class InternacionController extends BaseController
 
         $responseMessage  = null;
 
+        $hoy = date_create();
+
+        $fechaActual = date_timestamp_get($hoy);   
+
         if ($request->getMethod() == 'POST') {
 
             $postData = $request->getParsedBody();
@@ -191,13 +232,28 @@ class InternacionController extends BaseController
 
                 $internacionValidator->assert($postData);
 
-                if ($postData['fechaEgr'] > $postData['fechaIng']) {
+                if (strtotime($postData['fechaIng']) > $fechaActual ||
+                    strtotime($postData['fechaEgr']) > $fechaActual) {
+
+                    $responseMessage = 'La fechas de ingreso y egreso no puede ser mayores a la fecha actual';
+
+                    $camposIngresados = array(
+                        'id_internacion' => $postData['id_internacion'],
+                        'id_paciente' => $postData['id_paciente'],
+                        'nom_paciente' => $postData['nom_paciente'],
+                        'fechaIng' => $postData['fechaIng'],
+                        'fechaEgr' => $postData['fechaEgr']
+                        );  
+         
+
+                } elseif ($postData['fechaEgr'] > $postData['fechaIng']) {
 
                     /* Evaluamos que no haya una internacion del paciente entre las fechas ingresadas */
 
-                    $yaInternado = false;
+                    $yaInternado = null;
 
                     $fechaIngresoUsuario = strtotime($postData['fechaIng']);
+                    $fechaEgresoUsuario = strtotime($postData['fechaEgr']);
 
                     $internacionesPaciente = Internacion::where('idDePaciente', '=', $postData['id_paciente'])->get();
 
@@ -210,12 +266,19 @@ class InternacionController extends BaseController
                             $fechaIngresoInternacion = strtotime($internacion['fechaIngreso']);
                             $fechaEgresoInternacion = strtotime($internacion['fechaEgreso']);
 
-                            if ($fechaIngresoUsuario >= $fechaIngresoInternacion && $fechaIngresoUsuario <= $fechaEgresoInternacion) {
+                            if (($fechaIngresoUsuario < $fechaIngresoInternacion &&
+                                 $fechaEgresoUsuario < $fechaIngresoInternacion) || 
+                                ($fechaIngresoUsuario > $fechaEgresoInternacion &&
+                                 $fechaEgresoUsuario > $fechaEgresoInternacion))
 
+                            {
                                 // Si las fechas ingresadas se encuentran dentro del rango de una internacion anterior
+                                $yaInternado = false;                           
+
+                            } else {
 
                                 $yaInternado = true;
-                                
+
                             break;
 
                             }
@@ -254,10 +317,27 @@ class InternacionController extends BaseController
                 } else {
 
                     $responseMessage = 'La fecha de ingreso no puede ser menor a la fecha de egreso';
+
+                    $camposIngresados = array(
+                        'id_internacion' => $postData['id_internacion'],
+                        'id_paciente' => $postData['id_paciente'],
+                        'nom_paciente' => $postData['nom_paciente'],
+                        'fechaIng' => $postData['fechaIng'],
+                        'fechaEgr' => $postData['fechaEgr']
+                        );   
                 }
+
             } catch (\Exception $e) {
 
-                $responseMessage = $e->getMessage();
+                $responseMessage = "Todos los campos obligatorios";
+
+                $camposIngresados = array(
+                    'id_internacion' => $postData['id_internacion'],
+                    'id_paciente' => $postData['id_paciente'],
+                    'nom_paciente' => $postData['nom_paciente'],
+                    'fechaIng' => $postData['fechaIng'],
+                    'fechaEgr' => $postData['fechaEgr']
+                    );   
             }
 
             return $this->renderHTML('internacion/crear.twig', [

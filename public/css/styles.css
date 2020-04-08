@@ -98,6 +98,12 @@ table td.botoneraTabla {
     padding: .3rem 0;
 }
 
+/* Formulario Crear/Editar Internacion */
+
+div.crear_internacion span {
+    color:red;
+}
+
 footer {
     display: flex;
     align-items: center;
