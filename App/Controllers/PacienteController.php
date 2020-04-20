@@ -47,5 +47,38 @@ class PacienteController extends BaseController
         }
     }
 
+    
+    /***** Mostrar formulario Importar padron *****/
+    public function getImportPadronAction()
+    {
+        return $this->renderHTML('paciente/padron.twig',[            
+            'base_url' => $this->base_url
+        ]);
+    }
+
+    /***** Importar Padron desde archivo externo *****/
+    public function postProcesarPadronAction($request)
+    {
+        if ($request->getMethod() == 'POST') {
+
+            $file = $request->getUploadedFiles();
+
+            $padron = $file['padron'];
+
+
+
+            if ($padron->getError() == UPLOAD_ERR_OK) {
+
+                $fileName = $padron->getClientFilename();
+            
+                var_dump($file);
+
+            } 
+
+            
+        }
+    }
+
+
 
 }

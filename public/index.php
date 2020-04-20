@@ -62,6 +62,16 @@
         'action' => 'postSavePacienteAction'
     ]);
 
+    $map->get('importPadron', '/fuerarango/pacientes/padron', [
+        'controller' => 'App\Controllers\PacienteController',
+        'action' => 'getImportPadronAction'
+    ]);
+
+    $map->post('procesarPadron', '/fuerarango/pacientes/procesarPadron', [
+        'controller' => 'App\Controllers\PacienteController',
+        'action' => 'postProcesarPadronAction'
+    ]);
+
     /* PRACTICAS */
     $map->get('indexPracticas', '/fuerarango/practicas', [
         'controller' => 'App\Controllers\PracticaController',
