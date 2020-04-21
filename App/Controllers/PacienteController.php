@@ -22,7 +22,7 @@ class PacienteController extends BaseController
     /***** Mostrar formulario agregar registro *****/
     public function getAddPacienteAction()
     {
-        return $this->renderHTML('paciente/crear.twig',[            
+        return $this->renderHTML('paciente/crear.twig', [
             'base_url' => $this->base_url
         ]);
     }
@@ -39,7 +39,7 @@ class PacienteController extends BaseController
 
             $paciente->nombre = $postData['nombre'];
             $paciente->beneficio = $postData['beneficio'];
-            $paciente->dni = $postData['dni'];            
+            $paciente->dni = $postData['dni'];
 
             $paciente->save();
 
@@ -47,11 +47,11 @@ class PacienteController extends BaseController
         }
     }
 
-    
+
     /***** Mostrar formulario Importar padron *****/
     public function getImportPadronAction()
     {
-        return $this->renderHTML('paciente/padron.twig',[            
+        return $this->renderHTML('paciente/padron.twig', [
             'base_url' => $this->base_url
         ]);
     }
@@ -70,15 +70,15 @@ class PacienteController extends BaseController
             if ($padron->getError() == UPLOAD_ERR_OK) {
 
                 $fileName = $padron->getClientFilename();
-            
-                var_dump($file);
 
-            } 
+                $ruta = "uploads/$fileName";
 
-            
+                $padron->moveTo($ruta);
+
+                $lineas=file($ruta); 
+
+                
+            }
         }
     }
-
-
-
 }
