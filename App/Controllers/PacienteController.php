@@ -75,9 +75,46 @@ class PacienteController extends BaseController
 
                 $padron->moveTo($ruta);
 
-                $lineas=file($ruta); 
+                $registros = file($ruta);
 
-                
+                $cantRegistros = count($registros) - 1;
+
+                $nroBeneficio = substr($registros[0], 4, 14);
+
+                /**** ALTAS ****/
+                $estado[] = null;
+
+                for ($i = 0; $i < $cantRegistros; $i++) {
+
+                    $documentoPadron = (int) substr($registros[$i], 21, 8);
+
+                    $documentos[] = $documentoPadron; 
+
+                    $afiliadoExistente = Paciente::where('dni', '=', $documentoPadron)->count();
+
+                    if ($afiliadoExistente > 0) {
+
+                        $estado[$i] = 'el Paciente ' . $documentoPadron . ' ya existe en la base';
+
+                    } else {
+
+                        $estado[$i] = 'Se AGREGA paciente ' . $documentoPadron;
+                    }
+                }
+
+                /**** BAJAS ****/
+                $pacientes = Paciente::all();
+
+                foreach ($pacientes as $paciente) {
+
+                    if (in_array($paciente['dni'], $documentos)) {
+
+                        var_dump('el paciente esta en el ultimo padron');
+                    } else {
+                        var_dump('el paciente no esta y sera DADO de BAJA');
+                    }               
+
+                }
             }
         }
     }
