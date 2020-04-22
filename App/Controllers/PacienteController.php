@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Paciente;
 
+use Laminas\Diactoros\Response\RedirectResponse;
+
 class PacienteController extends BaseController
 {
 
@@ -78,28 +80,36 @@ class PacienteController extends BaseController
                 $registros = file($ruta);
 
                 $cantRegistros = count($registros) - 1;
-
-                $nroBeneficio = substr($registros[0], 4, 14);
+           
 
                 /**** ALTAS ****/
-                $estado[] = null;
+                $contadorAltas = 0;
 
                 for ($i = 0; $i < $cantRegistros; $i++) {
 
+                    $beneficioPadron = (int) substr($registros[$i], 4, 14);
                     $documentoPadron = (int) substr($registros[$i], 21, 8);
+                    $nombrePadron = rtrim(substr($registros[$i], 31, 40));
 
-                    $documentos[] = $documentoPadron; 
+                    $documentos[] = $documentoPadron;
 
                     $afiliadoExistente = Paciente::where('dni', '=', $documentoPadron)->count();
 
-                    if ($afiliadoExistente > 0) {
+                    if ($afiliadoExistente == 0) {
 
-                        $estado[$i] = 'el Paciente ' . $documentoPadron . ' ya existe en la base';
+                        $paciente = new Paciente;
 
-                    } else {
+                        $paciente->nombre = $nombrePadron;
+                        $paciente->beneficio = $beneficioPadron;
+                        $paciente->dni = $documentoPadron;
+                        $paciente->padron = 1;
 
-                        $estado[$i] = 'Se AGREGA paciente ' . $documentoPadron;
-                    }
+                        $paciente->save();
+                        
+                        $contadorAltas++;
+
+                    } 
+
                 }
 
                 /**** BAJAS ****/
@@ -107,14 +117,21 @@ class PacienteController extends BaseController
 
                 foreach ($pacientes as $paciente) {
 
-                    if (in_array($paciente['dni'], $documentos)) {
+                    if (!in_array($paciente['dni'], $documentos)) {
+                        
+                        
+                        // $paciente->activo = 0;
 
-                        var_dump('el paciente esta en el ultimo padron');
-                    } else {
+                        // $paciente->save();
+                        
                         var_dump('el paciente no esta y sera DADO de BAJA');
-                    }               
 
+                    } 
                 }
+
+                var_dump($contadorAltas);
+
+
             }
         }
     }
