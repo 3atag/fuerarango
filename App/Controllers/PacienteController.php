@@ -13,7 +13,7 @@ class PacienteController extends BaseController
     /***** Mostrar todos los registros *****/
     public function getAllPacienteAction()
     {
-        $pacientes = Paciente::all();
+        $pacientes = Paciente::where('activo', '=', 1)->get();;
 
         return $this->renderHTML('paciente/pacientes.twig', [
             'pacientes' => $pacientes,
@@ -81,9 +81,11 @@ class PacienteController extends BaseController
 
                 $cantRegistros = count($registros) - 1;
            
-
+                
+                
                 /**** ALTAS ****/
                 $contadorAltas = 0;
+                $contadorBajas = 0;
 
                 for ($i = 0; $i < $cantRegistros; $i++) {
 
@@ -117,20 +119,24 @@ class PacienteController extends BaseController
 
                 foreach ($pacientes as $paciente) {
 
-                    if (!in_array($paciente['dni'], $documentos)) {
-                        
-                        
-                        // $paciente->activo = 0;
+                    if (!in_array($paciente['dni'], $documentos) && $paciente['activo']!=0) {                      
+                                             
+                        $paciente->activo = 0;
 
-                        // $paciente->save();
-                        
-                        var_dump('el paciente no esta y sera DADO de BAJA');
+                        $paciente->save();
+
+                        $contadorBajas++;    
 
                     } 
                 }
+                
+                $responseMessage = 'Se realizaron '.$contadorAltas.' Ingreos y '.$contadorBajas.' Bajas en la Padron de afiliados';
 
-                var_dump($contadorAltas);
+                return $this->renderHTML('paciente/padron.twig', [
+                    'responseMessage' => $responseMessage
+                ]);
 
+                // return new RedirectResponse('/fuerarango/pacientes');               
 
             }
         }
