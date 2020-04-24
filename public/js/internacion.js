@@ -4,6 +4,7 @@
     document.addEventListener('DOMContentLoaded', function () {
 
         let  buscador = document.querySelector('#buscador'),
+             documento = document.querySelector('#documento'),
              btnSeleccionar = document.querySelector('#btnSeleccionar'),
              registros = document.querySelectorAll('#allPacientes tbody tr');
 
@@ -25,14 +26,13 @@
        buscador.addEventListener('input', function (e) {
 
        const expresion = RegExp (e.target.value, "i");
-
     
 
        registros.forEach(registro =>{
     
            registro.style.display = 'none';
 
-           if(registro.childNodes[5].textContent.replace(/\s/g, " ").search(expresion) != -1) {
+           if(registro.childNodes[3].textContent.replace(/\s/g, " ").search(expresion) != -1) {
 
                         
             registro.style.display = 'table-row';
@@ -40,8 +40,27 @@
            }
        });
 
-
     });
+
+
+    documento.addEventListener('input', function (e) {
+
+        const expresion = RegExp (e.target.value, "i");
+     
+ 
+        registros.forEach(registro =>{
+     
+            registro.style.display = 'none';
+ 
+            if(registro.childNodes[5].textContent.replace(/\s/g, " ").search(expresion) != -1) {
+ 
+                         
+             registro.style.display = 'table-row';
+ 
+            }
+        });
+        
+     });
 
 
 

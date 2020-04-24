@@ -5,13 +5,13 @@ header.contenedor-encabezado {
     margin-bottom: .7rem;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     padding: .7rem;
 }
 
 header.contenedor-encabezado p {
     margin-bottom: 0;
-    margin-right: 1rem;
+    margin-left: 1rem;
     font-size: .8rem;
 }
 
@@ -40,9 +40,15 @@ div .botonera {
 }
 
 div .botonera a {
-    margin-left: .8rem;
-   
-    
+    margin-left: .8rem; 
+}
+
+.botonera a {
+    color:#666;
+}
+
+.botonera a:hover {
+    opacity: .8;
 }
 
 div .contenedor-views {
@@ -61,6 +67,10 @@ div .contenedor-views h4 {
     margin-bottom:.9rem;
 }
 
+div .comandos {
+    padding: 0 .5rem;  
+}
+
 
 div .botonera-agregar {
     margin-bottom: .5rem;
@@ -73,8 +83,14 @@ margin-right: .3rem;
 
 table {
    font-size: .9rem !important;
-
+   
 }
+
+table td {
+    
+    vertical-align: middle !important;
+    
+ }
 
 table .tablaRangosTitulo {
     text-align: center;
@@ -87,16 +103,16 @@ table .tablaRangos {
 
 }
 
-table .tablaBotonera {
-    min-width: 12rem;
-
-}
-
 
 table td.botoneraTabla {
-    text-align: center;
+    text-align: right;
     padding: .3rem 0;
 }
+
+table td.botoneraTabla a {
+    margin-right:.3rem;
+}
+
 
 /* Formulario Crear/Editar Internacion */
 
@@ -118,3 +134,17 @@ footer p {
 }
 
 
+.modal-dialog {
+    min-width: 80% !important;
+}
+
+div .contenedor-buscador {
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+
+.contenedor-buscador input {
+    margin-top: .8rem;
+    width: 32rem;
+}

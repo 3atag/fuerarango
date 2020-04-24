@@ -16,10 +16,10 @@
 
 		<!-- FontAwesome -->
 		<link
-		href="{{base_url}}fontawesome/css/all.min.css" rel="stylesheet">
+		href="http://localhost/fuerarango/fontawesome/css/all.min.css" rel="stylesheet">
 
 		<!-- Estilos de la aplicacion -->
-		<link href="{{base_url}}css/styles.css" rel="stylesheet">
+		<link href="http://localhost/fuerarango/css/styles.css" rel="stylesheet">
 
 	</head>
 
@@ -29,10 +29,11 @@
 			<div class="row">
 				<div class="col">
 					<header class="bg-light contenedor-encabezado">
+					<img src="http://localhost/fuerarango/img/logopami.png" alt="Pami">
 						<p>
-							INSSJyP - Sistema de control de rangos y excluyentes
+							<strong>Sistema de Control de Rangos y Excluyentes</strong>
 						</p>
-						<img src="{{base_url}}img/logopami.png" alt="Pami">
+						
 					</header>
 				</div>
 			</div>
@@ -55,7 +56,7 @@
 					<div class="col">
 						<footer class="bg-light">
 							<p>Version 1.0 - Desarrollado por Sistemas de Información | CPHA</p>
-							<img src="{{base_url}}img/logosi.png" alt="Sistemas de Información">
+							<img src="http://localhost/fuerarango/img/logosi.png" alt="Sistemas de Información">
 						</footer>
 					</div>
 				</div>
@@ -67,7 +68,7 @@
 			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-			
+			{% block javascript %}{% endblock %}
 			
 
 		</body>

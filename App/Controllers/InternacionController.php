@@ -17,7 +17,7 @@ class InternacionController extends BaseController
     {
 
         $internaciones = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
-            ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
+            ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.id')
             ->get();
 
 
@@ -35,8 +35,7 @@ class InternacionController extends BaseController
         $pacientes = Paciente::all();
 
         return $this->renderHTML('internacion/crear.twig', [
-            'pacientes' => $pacientes,
-            'base_url' => $this->base_url
+            'pacientes' => $pacientes
         ]);
     }
 
@@ -176,8 +175,8 @@ class InternacionController extends BaseController
             // Recibo parametros desde la url
             $id = (int) $request->getAttribute('id');
 
-            $internacion = Internacion::select('pacientes.idPaciente', 'pacientes.beneficio', 'pacientes.nombre', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
-                ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.idPaciente')
+            $internacion = Internacion::select('pacientes.id', 'pacientes.beneficio', 'pacientes.nombre', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
+                ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.id')
                 ->where('internaciones.id', '=', $id)
                 ->first();
 

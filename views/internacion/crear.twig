@@ -5,154 +5,163 @@
 	<div class="crear_internacion">
 
 		{% set tituloAction = 'Agregar' %}
-		{% set formAction = 'save' %}	
-		{% set submitValue = 'Siguiente' %}		
+		{% set formAction = 'save' %}
+		{% set submitValue = 'Siguiente' %}
 		{% set statusButtonSelectPaciente = '' %}
-
 
 
 		{% if isEdit %}
 
 			{% set tituloAction = 'Editar' %}
 			{% set formAction = 'saveEdit' %}
-			{% set submitValue = 'Modificar' %}	
-			{% set statusButtonSelectPaciente = 'disabled' %}		
+			{% set submitValue = 'Modificar' %}
+			{% set statusButtonSelectPaciente = 'disabled' %}
 
 			{% set id_internacionValue = internacion.id %}
 			{% set id_pacienteValue = internacion.idPaciente %}
 			{% set nom_pacienteValue = internacion.nombre %}
 			{% set fechaIngValue = internacion.fechaIngreso|date("Y-m-d\\TH:i:s") %}
-			{% set fechaEgrValue = internacion.fechaEgreso|date("Y-m-d\\TH:i:s") %}		
-		
-		{% endif %} 
+			{% set fechaEgrValue = internacion.fechaEgreso|date("Y-m-d\\TH:i:s") %}
+
+		{% endif %}
 
 		{% if camposIngresados %}
 
-				{% set id_internacionValue = camposIngresados.id_internacion %}
-				{% set id_pacienteValue = camposIngresados.id_paciente %}
-				{% set nom_pacienteValue = camposIngresados.nom_paciente %}
-				{% set fechaIngValue = camposIngresados.fechaIng %}
-				{% set fechaEgrValue = camposIngresados.fechaEgr %}
+			{% set id_internacionValue = camposIngresados.id_internacion %}
+			{% set id_pacienteValue = camposIngresados.id_paciente %}
+			{% set nom_pacienteValue = camposIngresados.nom_paciente %}
+			{% set fechaIngValue = camposIngresados.fechaIng %}
+			{% set fechaEgrValue = camposIngresados.fechaEgr %}
 
-		{% endif %} 
+		{% endif %}
 
-		
-		
-		
-		<h4>{{ tituloAction }} Internacion</h4>
+
+		<h4>{{ tituloAction }}
+			Internacion</h4>
 
 		{% if responseMessage %}
-			
-			<div class="alert alert-primary"role="alert">
+
+			<div class="alert alert-primary" role="alert">
 
 				{{ responseMessage }}
 
 			</div>
 
-		{% endif %} 
-	
-			<form action="{{ formAction }}" method="post">
+		{% endif %}
 
-				<div class="form-group">
+		<form action="{{ formAction }}" method="post">
 
-					<input type="hidden" name="id_internacion" id="id_internacion" class="form-control" value="{{ id_internacionValue }}">
+			<div class="form-group">
 
-					<input type="hidden" name="id_paciente" id="id_paciente" class="form-control" value="{{id_pacienteValue}}">
+				<input type="hidden" name="id_internacion" id="id_internacion" class="form-control" value="{{ id_internacionValue }}">
 
-					<label for="paciente">Paciente <span>*</span></label>
-					
-					<div class="input-group">
+				<input type="hidden" name="id_paciente" id="id_paciente" class="form-control" value="{{id_pacienteValue}}">
 
-						<input type="text" name="nom_paciente" id="nom_paciente" class="form-control" value="{{nom_pacienteValue}}" readonly>
+				<label for="paciente">Paciente
+					<span>*</span>
+				</label>
 
-						<div class="input-group-append">
-						
-							<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modalAddPaciente" id="btnSeleccionar" {{statusButtonSelectPaciente}}>Seleccionar</button>
-					
-						</div>
-			
+				<div class="input-group">
+
+					<input type="text" name="nom_paciente" id="nom_paciente" class="form-control" value="{{nom_pacienteValue}}" readonly>
+
+					<div class="input-group-append">
+
+						<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#modalAddPaciente" id="btnSeleccionar" {{statusButtonSelectPaciente}}>Seleccionar</button>
+
 					</div>
 
 				</div>
 
-				<div class="form-group">
-					<label for="fechaIng">Fecha ingreso <span>*</span></label>
-					<input type="datetime-local" name="fechaIng" id="fechaIng" class="form-control" value="{{fechaIngValue}}">
-				</div>
-
-				<div class="form-group">
-					<label for="fechaEgr">Fecha Egreso <span>*</span></label>
-					<input type="datetime-local" name="fechaEgr" id="fechaEgr" class="form-control" value="{{fechaEgrValue}}">
-				</div>
-			
-				<input type="submit" value="{{ submitValue }}" class="btn btn-primary">	
-
-				<a href="/fuerarango/">
-					<button type="button" class="btn btn-secondary">Cancelar</button>
-				</a>
-
-			</form>
-	</div>
-
-<div class="modal fade-lg" id="modalAddPaciente" tabindex="-1" role="dialog" aria-labelledby="modalAddPaciente" aria-hidden="true">
-
-	<div class="modal-dialog-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">
-					Seleccionar paciente
-				</h5>
-				<button class="close" data-dismiss="modal" aria-label="Cerrar">
-					<span aria-hidden="true">&times;</span>
-				</button>
 			</div>
 
-			<input type="text" class="form-control buscador" id="buscador" placeholder="Buscar afiliado">
+			<div class="form-group">
+				<label for="fechaIng">Fecha ingreso
+					<span>*</span>
+				</label>
+				<input type="datetime-local" name="fechaIng" id="fechaIng" class="form-control" value="{{fechaIngValue}}">
+			</div>
 
-			<div class="modal-body">
+			<div class="form-group">
+				<label for="fechaEgr">Fecha Egreso
+					<span>*</span>
+				</label>
+				<input type="datetime-local" name="fechaEgr" id="fechaEgr" class="form-control" value="{{fechaEgrValue}}">
+			</div>
 
-				<table class="table" id="allPacientes">
+			<input type="submit" value="{{ submitValue }}" class="btn btn-primary">
 
-					<thead>
-						<tr>
-							<th></th>
-							<th>Beneficio</th>
-							<th>Nombre</th>
-							<th>DNI</th>
+			<a href="/fuerarango/">
+				<button type="button" class="btn btn-secondary">Cancelar</button>
+			</a>
 
-						</tr>
-					</thead>
+		</form>
+	</div>
 
-					<tbody>
+	<div class="modal fade" id="modalAddPaciente" tabindex="-1" role="dialog" aria-labelledby="modalAddPaciente" aria-hidden="true">
 
-						{% for paciente in pacientes %}
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">
+						Seleccionar paciente
+					</h5>
+					<button class="close" data-dismiss="modal" aria-label="Cerrar">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 
+				<div class="contenedor-buscador">
+					<input type="text" class="form-control buscador" id="buscador" placeholder="Nombre">
+					<input type="text" class="form-control buscador" id="documento" placeholder="Documento">
+				</div>
+
+				<div class="modal-body">
+
+					<table class="table table-sm tablaClasica" id="allPacientes">
+
+						<thead>
 							<tr>
-								<td>
-									<button type="button" class="btn btn-primary btn-paciente" value="{{paciente.idPaciente}}" name="{{paciente.nombre}}">Seleccionar</button>
-								</td>
-								<td>{{paciente.beneficio}}</td>
-								<td>{{paciente.nombre}}</td>
-								<td>{{paciente.dni}}</td>
+
+								<th>Beneficio</th>
+								<th>Nombre</th>
+								<th>DNI</th>
+								<th></th>
 
 							</tr>
+						</thead>
 
-						{% endfor %}
+						<tbody>
 
-					</tbody>
+							{% for paciente in pacientes %}
 
-				</table>
+								<tr>
+
+									<td>{{paciente.beneficio}}</td>
+									<td>{{paciente.nombre}}</td>
+									<td>{{paciente.dni}}</td>
+									<td class="botoneraTabla">
+										<button type="button" class="btn btn-primary btn-sm btn-paciente" value="{{paciente.idPaciente}}" name="{{paciente.nombre}}">Seleccionar</button>
+									</td>
+
+								</tr>
+
+							{% endfor %}
+
+						</tbody>
+
+					</table>
 
 
+				</div>
 			</div>
+
 		</div>
 
-	</div>
+	{% endblock %}
 
-{% endblock %}
+	{% block javascript %}
 
-{% block javascript %}
+		<script src="{{base_url}}js/internacion.js"></script>
 
-	<script src="{{base_url}}js/internacion.js"></script>
-
-{% endblock %}
+	{% endblock %}

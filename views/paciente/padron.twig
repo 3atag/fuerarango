@@ -7,19 +7,20 @@
 
 		{% if responseMessage %}
 
-				<script>
-				 
+			{# <script>
 
-					Swal.fire({
-						icon: 'success',
-  						title: 'Padron importado con exito',
-						text: '{{ responseMessage }}'
-					}).then(() => {
-  window.location = "/fuerarango/pacientes";
+
+				Swal.fire({icon: 'success', title: 'Padron importado con exito', text: '{{ responseMessage }}'}).then(() => {
+window.location = "/fuerarango/pacientes";
 });;
+			</script> #}
 
-					
-				</script>
+			<div class="alert alert-primary"role="alert">
+
+				<p>Padron importado con exito: {{ responseMessage }}</p>
+				
+
+			</div>
 
 		{% endif %}
 

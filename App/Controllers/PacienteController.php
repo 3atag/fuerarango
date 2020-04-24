@@ -130,10 +130,11 @@ class PacienteController extends BaseController
                     } 
                 }
                 
-                $responseMessage = 'Se realizaron '.$contadorAltas.' Ingreos y '.$contadorBajas.' Bajas en la Padron de afiliados';
+                $responseMessage = 'Se realizaron '.$contadorAltas.' Ingreos y '.$contadorBajas.'Bajas en la Padron de afiliados';
 
                 return $this->renderHTML('paciente/padron.twig', [
                     'responseMessage' => $responseMessage
+
                 ]);
 
                 // return new RedirectResponse('/fuerarango/pacientes');               
