@@ -13,7 +13,8 @@ class PacienteController extends BaseController
     /***** Mostrar todos los registros *****/
     public function getAllPacienteAction()
     {
-        $pacientes = Paciente::where('activo', '=', 1)->get();;
+        $pacientes = Paciente::where('activo', '=', 1)->get();
+
 
         return $this->renderHTML('paciente/pacientes.twig', [
             'pacientes' => $pacientes,

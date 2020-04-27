@@ -124,6 +124,40 @@
         'action' => 'postSaveEditInternacionAction'
     ]);
 
+     /* USUARIOS */
+     $map->get('indexUsuarios', '/fuerarango/usuarios', [
+        'controller' => 'App\Controllers\PacienteController',
+        'action' => 'getAllUsuarioAction'
+    ]);
+
+    // $map->get('addPaciente', '/fuerarango/pacientes/nuevo', [
+    //     'controller' => 'App\Controllers\PacienteController',
+    //     'action' => 'getAddPacienteAction'
+    // ]);
+
+    // $map->post('savePaciente', '/fuerarango/pacientes/save', [
+    //     'controller' => 'App\Controllers\PacienteController',
+    //     'action' => 'postSavePacienteAction'
+    // ]);
+
+    // $map->get('importPadron', '/fuerarango/pacientes/padron', [
+    //     'controller' => 'App\Controllers\PacienteController',
+    //     'action' => 'getImportPadronAction'
+    // ]);
+
+    // $map->post('procesarPadron', '/fuerarango/pacientes/procesarPadron', [
+    //     'controller' => 'App\Controllers\PacienteController',
+    //     'action' => 'postProcesarPadronAction'
+    // ]);
+
+    /* LOGIN */
+    $map->get('loginForm', '/fuerarango/login', [
+        'controller' => 'App\Controllers\AuthController',
+        'action' => 'getLogin'
+    ]);
+
+    /************************** ****************************/
+
     
     $matcher = $routerContainer->getMatcher();
 
