@@ -1,13 +1,15 @@
 {% extends "layout.twig" %}
 
 {% block content %}
+
+
 	
 	<div class="card" style="width: 22rem;">
 		<article class="card-body">
 			<h4 class="card-title text-center mb-4 mt-1">Acceder</h4>
 			<hr>
 
-			<form action="save" method="post">
+			<form action="auth" method="post">
 				<div class="form-group">
 					<div class="input-group">
 						<div class="input-group-prepend">
@@ -44,4 +46,5 @@
 	</div>
 	<!-- card.// -->
 
-</div>{% endblock %}
+
+{% endblock %}

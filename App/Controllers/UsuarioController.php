@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Usuario;
 
+use Respect\Validation\Validator as v;
+
 use Laminas\Diactoros\Response\RedirectResponse;
 
 class UsuarioController extends BaseController
@@ -15,9 +17,8 @@ class UsuarioController extends BaseController
     {
         $usuarios = Usuario::where('activo', '=', 1)->get();;
 
-        return $this->renderHTML('paciente/pacientes.twig', [
-            'pacientes' => $pacientes,
-            'base_url' => $this->base_url
+        return $this->renderHTML('usuario/usuarios.twig', [
+            'usuarios' => $usuarios
         ]);
     }
 
@@ -29,22 +30,42 @@ class UsuarioController extends BaseController
 
 
     /***** Guardar registro *****/
-    // public function postSavePacienteAction($request)
-    // {
-    //     if ($request->getMethod() == 'POST') {
+    public function postSaveUsuarioAction($request)
+    {
 
-    //         $postData = $request->getParsedBody();
+        $responseMessage  = null;
 
-    //         $paciente = new Paciente;
+        if ($request->getMethod() == 'POST') {
 
-    //         $paciente->nombre = $postData['nombre'];
-    //         $paciente->beneficio = $postData['beneficio'];
-    //         $paciente->dni = $postData['dni'];
+            $postData = $request->getParsedBody();
 
-    //         $paciente->save();
+            $usuarioValidator = v::key('nombre', v::stringType()->notEmpty())
+                ->key('email', v::email()->notEmpty())
+                ->key('clave', v::stringType()->notEmpty());
 
-    //         header('Location:/fuerarango/pacientes');
-    //     }
-    // }
+            try {
+                $usuarioValidator->assert($postData);
 
+                $usuario = new Usuario;
+
+                $usuario->nombre = $postData['nombre'];
+                $usuario->email = $postData['email'];
+                $usuario->clave = $postData['clave'];
+                $usuario->tipo = $postData['tipo'];
+
+                $usuario->save(); 
+                
+                $responseMessage  = 'Usuario creado con éxito';
+
+            } catch (\Exception $e) {
+
+                $responseMessage  = $e->getMessage();
+            }
+            
+            return $this->renderHTML('usuario/crear.twig', [
+                'responseMessage' => $responseMessage
+            ]);
+            
+        }
+    }
 }

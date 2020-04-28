@@ -9,7 +9,7 @@ use Database;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Practica extends Model 
+class Usuario extends Model 
 {
 
     protected $table = 'usuarios';

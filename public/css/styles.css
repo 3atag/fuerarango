@@ -1,4 +1,10 @@
+div .principal {
+    display: flex;
+    justify-content: center;
+    min-height: 80vh;
+}
 
+div
 
 header.contenedor-encabezado {
     margin-top: 1rem;
@@ -20,15 +26,24 @@ div.form-row {
     margin-bottom: 1rem;
 }
 
-div .agregar_internacion h1 span {
+div .contenido  {
+    width:100%;
+}
+
+div .contenedor_formulario  {
+    width:60%;   
+}
+
+div .contenido h1 span {
     font-size: 1rem !important;
 }
 
-div .agregar_internacion h4 {
-    font-size: .9rem !important;
+div .contenido h4 {
+    font-size: 1.2rem !important;
+    margin-bottom: 1rem;
 }
 
-div .agregar_internacion a {
+div .contenido a {
     text-decoration: none;
 }
 

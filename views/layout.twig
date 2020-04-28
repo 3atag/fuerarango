@@ -7,8 +7,8 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>INSSJyP - Sistema de control de rangos y excluyentes</title>
 
-		<!-- SWEET ALERT 2 -->         
-			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+		<!-- SWEET ALERT 2 -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 		<!-- BOOTSTRAP -->
 		<link
@@ -26,54 +26,56 @@
 	<body>
 
 		<div class="container">
+		
 			<div class="row">
 				<div class="col">
 					<header class="bg-light contenedor-encabezado">
-					<img src="http://localhost/fuerarango/img/logopami.png" alt="Pami">
+						<img src="http://localhost/fuerarango/img/logopami.png" alt="Pami">
 						<p>
 							<strong>Sistema de Control de Rangos y Excluyentes</strong>
 						</p>
-						
+
 					</header>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col">
-					<section class="principal">
-                    
-                    {# Aca va el contenido de la aplicacion #}
-                    {% block content %}{% endblock %}
+
+					<section
+						class="principal">
+
+						{# Aca va el contenido de la aplicacion #}
+						{% block content %}{% endblock %}
 
 
 					</section>
 				</div>
-					<!-- Cierre del col principal  -->
-				</div>
-				<!-- Cierre del row principal  -->
+				<!-- Cierre del col principal  -->
+			</div>
+			<!-- Cierre del row principal  -->
 
-				<div class="row" id="contFooter">
-					<div class="col">
-						<footer class="bg-light">
-							<p>Version 1.0 - Desarrollado por Sistemas de Información | CPHA</p>
-							<img src="http://localhost/fuerarango/img/logosi.png" alt="Sistemas de Información">
-						</footer>
-					</div>
+			<div class="row" id="contFooter">
+				<div class="col">
+					<footer class="bg-light">
+						<p>Version 1.0 - Desarrollado por Sistemas de Información | CPHA</p>
+						<img src="http://localhost/fuerarango/img/logosi.png" alt="Sistemas de Información">
+					</footer>
 				</div>
-
 			</div>
 
-			<!-- BOOTSTRAP -->
-			<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+		</div>
+
+		<!-- BOOTSTRAP -->
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 
+		{% block javascript %}{% endblock %}
+		{% block pacientes_js %}{% endblock %}
 
-			{% block javascript %}{% endblock %}
-			 {% block pacientes_js %}{% endblock %}
-			
 
-		</body>
+	</body>
 
-	</html>
+</html>

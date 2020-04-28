@@ -2,63 +2,60 @@
 
 {% block content %}
 
-<div class="agregar_paciente">
+	<div class="contenido">
 
-    <div class="row ">
+		<div class="row comandos">
 
-        <div class="col-6 botonera-agregar">
-            <a href="pacientes/nuevo">
-                <i class="fas fa-plus-circle fa-2x"></i>
-            </a>
-        </div>
+			<div class="col-6 botonera-agregar">
+				<a href="usuarios/nuevo">
+					<i class="fas fa-plus-circle fa-2x"></i>
+				</a>
+			</div>
 
-        <div class="col botonera">         
-
-            <a href="pacientes/padron" class="btn btn-secondary">
-                <i class="fas fa-file-import fa-lg"></i>
-            </a>
-        </div>
-
-    </div>
+		</div>
 
 
-    <div class="row">
-        <div class="col">
+		<div class="row">
+			<div class="col">
 
-            <table class="table tablaClasica">
+				<table class="table table-hover table-sm tablaClasica">
 
-             <thead>
-                    <tr>
-                        <th>Beneficio</th>
-                        <th>Nombre</th>
-                        <th>DNI</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Correo</th>
+							<th>Rol</th>
+							<th></th>
+						</tr>
 
-                </thead>
+					</thead>
 
-                {% for paciente in pacientes %}
+					{% for usuario in usuarios %}
 
-                    <tr>
-                        <td>{{ paciente.beneficio}}</td>
-                        <td>{{ paciente.nombre}}</td>
-                        <td>{{ paciente.dni}}</td>
-                        <td><button type="button" class="btn btn-info">Editar</button></td>
-                        <td><button type="button" class="btn btn-danger">Eliminar</button></td>
-                    </tr>
+						<tr>
+							<td>{{ usuario.nombre}}</td>
+							<td>{{ usuario.email}}</td>
+							<td>{{ usuario.tipo}}</td>
+							<td class="botoneraTabla">
+								<a href='#' class="btn btn-primary btn-sm" role="button"><i class="fas fa-pencil-alt"></i></a>
+								<a href='#' class="btn btn-danger btn-sm" role="button"><i class="fas fa-trash-alt"></i></a>
+							</td>
 
-                {% endfor %}
+						</tr>
 
-            </table>
-        </div>
-    </div>
-<div class="form-row botonera-comun">
-        <div class="col">
+					{% endfor %}
 
-            <a href="/fuerarango"><button type="button" class="btn btn-secondary btn-sm">Volver</button></a>
-        </div>
-    </div>
-</div>
+				</table>
+			</div>
+		</div>
+		<div class="form-row botonera-comun">
+			<div class="col">
 
-    {% endblock %}
+				<a href="/fuerarango">
+					<button type="button" class="btn btn-secondary btn-sm">Volver</button>
+				</a>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

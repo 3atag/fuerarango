@@ -126,8 +126,18 @@
 
      /* USUARIOS */
      $map->get('indexUsuarios', '/fuerarango/usuarios', [
-        'controller' => 'App\Controllers\PacienteController',
+        'controller' => 'App\Controllers\UsuarioController',
         'action' => 'getAllUsuarioAction'
+    ]);
+
+    $map->get('addUsuarios', '/fuerarango/usuarios/nuevo', [
+        'controller' => 'App\Controllers\UsuarioController',
+        'action' => 'getAddUsuarioAction'
+    ]);
+
+    $map->post('saveUsuarios', '/fuerarango/usuarios/save', [
+        'controller' => 'App\Controllers\UsuarioController',
+        'action' => 'postSaveUsuarioAction'
     ]);
 
     // $map->get('addPaciente', '/fuerarango/pacientes/nuevo', [
@@ -154,6 +164,11 @@
     $map->get('loginForm', '/fuerarango/login', [
         'controller' => 'App\Controllers\AuthController',
         'action' => 'getLogin'
+    ]);
+
+    $map->post('auth', '/fuerarango/auth', [
+        'controller' => 'App\Controllers\AuthController',
+        'action' => 'postLoginAction'
     ]);
 
     /************************** ****************************/

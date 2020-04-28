@@ -29,22 +29,32 @@ class AuthController extends BaseController
 
 
     /***** Guardar registro *****/
-    // public function postSavePacienteAction($request)
-    // {
-    //     if ($request->getMethod() == 'POST') {
+    public function postLoginAction($request)
+    {
+        if ($request->getMethod() == 'POST') {
 
-    //         $postData = $request->getParsedBody();
+            $postData = $request->getParsedBody();
+            // Busco el primer resultado de email correspondiente en la base
+            $usuario = Usuario::where('email',$postData['email'])->first();
 
-    //         $paciente = new Paciente;
+            // Si existe ese primer resultado
+            if($usuario) {
 
-    //         $paciente->nombre = $postData['nombre'];
-    //         $paciente->beneficio = $postData['beneficio'];
-    //         $paciente->dni = $postData['dni'];
+                // Si el usuario existe
+                if(password_verify($postData['clave'], $usuario->clave)) {
 
-    //         $paciente->save();
+                    var_dump('Correcto');
 
-    //         header('Location:/fuerarango/pacientes');
-    //     }
-    // }
+                } else {
+                    var_dump('Incorrecto');
+                }
+
+            } else {
+
+                var_dump(' NO encontrado');
+
+            }
+        }
+    }
 
 }
