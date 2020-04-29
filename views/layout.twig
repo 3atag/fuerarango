@@ -26,14 +26,25 @@
 	<body>
 
 		<div class="container">
-		
+
 			<div class="row">
 				<div class="col">
 					<header class="bg-light contenedor-encabezado">
-						<img src="http://localhost/fuerarango/img/logopami.png" alt="Pami">
-						<p>
-							<strong>Sistema de Control de Rangos y Excluyentes</strong>
-						</p>
+						<div class="nombre_aplicacion">
+							<img src="http://localhost/fuerarango/img/logopami.png" alt="Pami">
+							<p>
+								<strong>Sistema de Control de Rangos y Excluyentes</strong>
+							</p>
+						</div>
+						{% if userName %}
+							<div class="datos_session">
+								<p>Bienvenido,
+									<strong>{{ userName }}</strong>
+									|
+									<a href="logout">Salir</a>
+								</p>
+							</div>
+						{% endif %}
 
 					</header>
 				</div>
@@ -73,6 +84,7 @@
 
 
 		{% block javascript %}{% endblock %}
+		
 		{% block pacientes_js %}{% endblock %}
 
 

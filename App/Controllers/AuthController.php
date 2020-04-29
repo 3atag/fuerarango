@@ -21,40 +21,61 @@ class AuthController extends BaseController
     //     ]);
     // }
 
-    /***** Mostrar formulario agregar registro *****/
+    /***** Mostrar formulario login *****/
     public function getLogin()
     {
         return $this->renderHTML('login.twig');
     }
 
 
-    /***** Guardar registro *****/
+    /***** Validar acceso *****/
     public function postLoginAction($request)
     {
+        $responseMessage  = null;
+
         if ($request->getMethod() == 'POST') {
 
             $postData = $request->getParsedBody();
+
+            $usuario = Usuario::where('email', $postData['email'])->first();
             // Busco el primer resultado de email correspondiente en la base
-            $usuario = Usuario::where('email',$postData['email'])->first();
 
-            // Si existe ese primer resultado
-            if($usuario) {
 
-                // Si el usuario existe
-                if(password_verify($postData['clave'], $usuario->clave)) {
+            if ($usuario) {
+                // Si existe un usuario con el mail ingresado
 
-                    var_dump('Correcto');
+                if (password_verify($postData['clave'], $usuario->clave)) {
+                    // Si la clave ingresada es correcta
+
+                    $_SESSION['userId'] = $usuario->id;
+                    $_SESSION['userName'] = $usuario->nombre;
+
+                    return new RedirectResponse('/fuerarango/internaciones');
 
                 } else {
-                    var_dump('Incorrecto');
+                    // Si la clave ingresada es incorrecta    
+                    $responseMessage  = 'Credencial incorrecta, verifique datos de acceso';
                 }
-
             } else {
-
-                var_dump(' NO encontrado');
+                // Si el mail no fue encontrado en la base    
+                $responseMessage  = 'Credencial incorrecta, verifique datos de acceso';
 
             }
+
+            return $this->renderHTML('login.twig', [
+                'responseMessage' => $responseMessage
+            ]);
+
+
         }
     }
 
+
+    /***** Cerrar session *****/
+    public function getLogout()
+    {
+        session_unset ();
+
+        return new RedirectResponse('/fuerarango');
+    }
 }

@@ -50,7 +50,7 @@ class UsuarioController extends BaseController
 
                 $usuario->nombre = $postData['nombre'];
                 $usuario->email = $postData['email'];
-                $usuario->clave = $postData['clave'];
+                $usuario->clave = password_hash($postData['clave'], PASSWORD_DEFAULT);
                 $usuario->tipo = $postData['tipo'];
 
                 $usuario->save(); 

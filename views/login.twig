@@ -3,11 +3,19 @@
 {% block content %}
 
 
-	
 	<div class="card" style="width: 22rem;">
 		<article class="card-body">
 			<h4 class="card-title text-center mb-4 mt-1">Acceder</h4>
 			<hr>
+			{% if responseMessage %}
+
+				<div class="alert alert-primary" role="alert">
+
+					{{ responseMessage }}
+
+				</div>
+
+			{% endif %}
 
 			<form action="auth" method="post">
 				<div class="form-group">

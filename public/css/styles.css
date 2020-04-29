@@ -4,14 +4,16 @@ div .principal {
     min-height: 80vh;
 }
 
-div
+div .nombre_aplicacion {
+    display: flex;
+}
 
 header.contenedor-encabezado {
-    margin-top: 1rem;
+    display: flex; 
     margin-bottom: .7rem;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: .7rem;
 }
 

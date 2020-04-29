@@ -23,8 +23,7 @@ class InternacionController extends BaseController
 
         return $this->renderHTML('internacion/internaciones.twig', [
             'internaciones' => $internaciones,
-            'base_url' => $this->base_url
-
+            'userName' => $_SESSION['userName']
         ]);
     }
 

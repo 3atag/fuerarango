@@ -3,6 +3,11 @@
 
     require_once '../vendor/autoload.php';
 
+    session_start();
+
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+    $dotenv->load();
+  
     /*----------- Laravel Eloquent Config ------------*/
 
     use Illuminate\Database\Capsule\Manager as Capsule;
@@ -13,7 +18,7 @@
 
     $capsule->addConnection([
         'driver'    => 'mysql',
-        'host'      => 'localhost',
+        'host'      => getenv('DB_HOST'),
         'database'  => 'fuerarango',
         'username'  => 'root',
         'password'  => '',
@@ -46,10 +51,18 @@
 
     $map = $routerContainer->getMap();
 
+    /* AUTENTICACION */
+
+    $map->get('index', '/fuerarango/', [
+        'controller' => 'App\Controllers\AuthController',
+        'action' => 'getLogin'
+    ]);
+
     /* PACIENTES */
     $map->get('indexPacientes', '/fuerarango/pacientes', [
         'controller' => 'App\Controllers\PacienteController',
-        'action' => 'getAllPacienteAction'
+        'action' => 'getAllPacienteAction',
+        'auth' => true
     ]);
 
     $map->get('addPaciente', '/fuerarango/pacientes/nuevo', [
@@ -108,13 +121,14 @@
         'controller' => 'App\Controllers\InternacionController',
         'action' => 'postSaveInternacionAction'
     ]);
-   
-    $map->get('index', '/fuerarango/', [
+
+    $map->get('indexInternaciones', '/fuerarango/internaciones', [
         'controller' => 'App\Controllers\InternacionController',
-        'action' => 'getAllInternacionAction'
+        'action' => 'getAllInternacionAction',
+        'auth' => true
     ]);
 
-    $map->get('editInternacion', '/fuerarango/internaciones/edit/{id}', [        
+    $map->get('editInternacion', '/fuerarango/internaciones/edit/{id}', [
         'controller' => 'App\Controllers\InternacionController',
         'action' => 'getEditInternacionAction'
     ]);
@@ -124,8 +138,8 @@
         'action' => 'postSaveEditInternacionAction'
     ]);
 
-     /* USUARIOS */
-     $map->get('indexUsuarios', '/fuerarango/usuarios', [
+    /* USUARIOS */
+    $map->get('indexUsuarios', '/fuerarango/usuarios', [
         'controller' => 'App\Controllers\UsuarioController',
         'action' => 'getAllUsuarioAction'
     ]);
@@ -161,42 +175,56 @@
     // ]);
 
     /* LOGIN */
-    $map->get('loginForm', '/fuerarango/login', [
-        'controller' => 'App\Controllers\AuthController',
-        'action' => 'getLogin'
-    ]);
 
     $map->post('auth', '/fuerarango/auth', [
         'controller' => 'App\Controllers\AuthController',
         'action' => 'postLoginAction'
     ]);
 
+    $map->get('logout', '/fuerarango/logout', [
+        'controller' => 'App\Controllers\AuthController',
+        'action' => 'getLogout'
+    ]);
+
     /************************** ****************************/
 
-    
+
     $matcher = $routerContainer->getMatcher();
 
     $route = $matcher->match($request);
 
     if (!$route) {
 
-       echo 'no route';
-
+        echo 'La ruta ingresada no existe';
     } else {
         // Recorremos los atributos de la ruta (los valores que traemos por url)
         foreach ($route->attributes as $attribute => $value) {
 
             // Agregamos al request el atributo y su valor en cada iteracion, una vez por atributo
-            $request = $request->withAttribute($attribute,$value);
-            
+            $request = $request->withAttribute($attribute, $value);
         }
 
         $handlerData = $route->handler;
         $controllerName = $handlerData['controller'];
         $actionName = $handlerData['action'];
 
-        $controller = new $controllerName;
-        $response = $controller->$actionName($request);
+        $needsAuth = $handlerData['auth'] ?? false;
+
+        $sessionUserId = $_SESSION['userId'] ?? null;
+
+        if ($needsAuth && !$sessionUserId) {
+            // Si requiere autenticacion y el user id NO ESTA definido
+
+            $response = new RedirectResponse('/fuerarango');
+            // La respuesta redirige a login
+
+        } else {
+            // Si requiere autenticacion y el user id ESTA definido
+
+            $controller = new $controllerName;
+            $response = $controller->$actionName($request);
+            // La respuesta se carga con el controlador y la accion
+        }
 
         foreach ($response->getHeaders() as $name => $values) {
 
@@ -206,8 +234,8 @@
         }
 
         http_response_code($response->getStatusCode());
-        echo $response->getBody();
 
+        echo $response->getBody();
     }
 
     ?>
