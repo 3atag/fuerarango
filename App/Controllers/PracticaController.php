@@ -43,7 +43,7 @@ class PracticaController extends BaseController
 
             $practica->save();
 
-            header('Location:/fuerarango/practicas');
+            header('Location:/practicas');
         }
     }
 }

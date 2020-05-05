@@ -141,7 +141,7 @@ class InternacionController extends BaseController
 
                         $responseMessage = 'Internacion guardada con exito';
 
-                        return new RedirectResponse('/fuerarango');
+                        return new RedirectResponse('/');
                     }
                 }
             } catch (\Exception $e) {
@@ -182,7 +182,7 @@ class InternacionController extends BaseController
 
             if ($internacion === null) {
 
-                return new RedirectResponse('/fuerarango');
+                return new RedirectResponse('/');
             } else {
 
                 return $this->renderHTML('internacion/crear.twig', [
@@ -310,7 +310,7 @@ class InternacionController extends BaseController
 
                         $responseMessage = 'Internacion Editada con exito';
 
-                        return new RedirectResponse('/fuerarango');
+                        return new RedirectResponse('/');
                     }
                 }
             } catch (\Exception $e) {

@@ -50,7 +50,7 @@ class AuthController extends BaseController
                     $_SESSION['userId'] = $usuario->id;
                     $_SESSION['userName'] = $usuario->nombre;
 
-                    return new RedirectResponse('/fuerarango/internaciones');
+                    return new RedirectResponse('/internaciones');
 
                 } else {
                     // Si la clave ingresada es incorrecta    
@@ -76,6 +76,6 @@ class AuthController extends BaseController
     {
         session_unset ();
 
-        return new RedirectResponse('/fuerarango');
+        return new RedirectResponse('/');
     }
 }

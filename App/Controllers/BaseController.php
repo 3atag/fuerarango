@@ -9,14 +9,12 @@ use Laminas\Diactoros\Response\HtmlResponse;
 
 class BaseController
 {
-    protected $base_url;
+    
 
     protected $templateEngine;
 
        public function __construct()
     {
-
-        $this -> base_url = BASE_URL;
 
         $loader = new \Twig\Loader\FilesystemLoader('../views/');
 
