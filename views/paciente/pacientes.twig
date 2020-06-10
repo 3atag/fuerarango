@@ -4,20 +4,30 @@
 
 <div class="contenido">
 
-    <div class="row ">
+    <div class="migas">
+
+        <nav class="nav-migas" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">Pacientes</li>
+            </ol>
+        </nav>
+
+
+        <div class="col botonera">
+
+            <button type="button" class="btn btn-outline-secondary btn-sm"><a href="/internaciones">Internaciones</a></button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm"><a href="pacientes">Practicas</a></button>
+        </div>
+    </div>
+
+    <div class="row comandos">
 
         <div class="col-6 botonera-agregar">
-            <a href="pacientes/nuevo">
-                <i class="fas fa-plus-circle fa-2x"></i>
-            </a>
+            <button type="button" class="btn btn-primary btn-sm"><a href="pacientes/nuevo">Nuevo</a></button>
+            <button type="button" class="btn btn-primary btn-sm"><a href="pacientes/padron">Importar</a></button>
         </div>
 
-        <div class="col botonera">         
-
-            <a href="pacientes/padron" class="btn btn-secondary">
-                <i class="fas fa-file-import fa-lg"></i>
-            </a>
-        </div>
 
     </div>
 
@@ -25,7 +35,7 @@
     <div class="row">
         <div class="col">
 
-            <table class="table tablaClasica">
+            <table class="table table-hover table-sm tablaClasica">
 
              <thead>
                     <tr>
@@ -33,34 +43,49 @@
                         <th>Nombre</th>
                         <th>DNI</th>
                         <th></th>
-                        <th></th>
+
                     </tr>
 
                 </thead>
 
+                {% if paciente.padron == 0  %}
+
+                    {% set fondoNoPadron = 'verdeClaro' %}
+
+		        {% endif %}
+
                 {% for paciente in pacientes %}
 
-                    <tr>
+                    <tr class="{{ fondoNoPadron }}">
                         <td>{{ paciente.beneficio}}</td>
                         <td>{{ paciente.nombre}}</td>
                         <td>{{ paciente.dni}}</td>
-                        <td><button type="button" class="btn btn-info">Editar</button></td>
-                        <td><button type="button" class="btn btn-danger">Eliminar</button></td>
+                        <td class="botoneraTabla"><a href='#' class="btn btn-outline-secondary btn-sm" role="button"><i class="fas fa-ellipsis-h"></i></a>
+
                     </tr>
 
                 {% endfor %}
 
             </table>
+
+            <nav aria-label="...">
+                <ul class="pagination pagination-sm">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
-<div class="form-row botonera-comun">
-        <div class="col">
 
-            <a href="/internaciones"><button type="button" class="btn btn-secondary btn-sm">Volver</button></a>
-        </div>
-    </div>
-
-</div>
 
     {% endblock %}
 

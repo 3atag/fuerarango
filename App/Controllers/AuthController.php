@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use App\Models\Usuario;
 
 use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\ServerRequest;
+
 
 class AuthController extends BaseController
 {
@@ -29,7 +31,7 @@ class AuthController extends BaseController
 
 
     /***** Validar acceso *****/
-    public function postLoginAction($request)
+    public function postLoginAction(ServerRequest $request)
     {
         $responseMessage  = null;
 

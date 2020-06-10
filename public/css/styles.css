@@ -10,7 +10,6 @@ div .nombre_aplicacion {
 
 header.contenedor-encabezado {
     display: flex; 
-    margin-bottom: .7rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -21,6 +20,26 @@ header.contenedor-encabezado p {
     margin-bottom: 0;
     margin-left: 1rem;
     font-size: .8rem;
+}
+.migas {
+    display: flex;
+    align-content: space-around;
+    background-color: #e9ecef;
+    padding: .3rem 0;
+}
+
+.nav-migas {
+    display: flex;
+    align-items: center;
+}
+.breadcrumb {
+    padding: .1rem .7rem !important;
+    font-size: small;
+}
+
+ol.breadcrumb {
+    margin: 0 !important;
+
 }
 
 
@@ -45,27 +64,29 @@ div .contenido h4 {
     margin-bottom: 1rem;
 }
 
-div .contenido a {
+div .contenido .botonera a {
     text-decoration: none;
+    color: grey;
+}
+
+div .contenido .botonera button:hover {
+    background-color: darkgrey;
+
+}
+
+div .contenido .botonera button:hover a {
+      color: white;
 }
 
 div .botonera {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    
 }
 
-div .botonera a {
-    margin-left: .8rem; 
-}
+div .botonera button {
+    margin-left: .2rem;
 
-.botonera a {
-    color:#666;
-}
-
-.botonera a:hover {
-    opacity: .8;
 }
 
 div .contenedor-views {
@@ -85,22 +106,47 @@ div .contenedor-views h4 {
 }
 
 div .comandos {
-    padding: 0 .5rem;  
+    padding: .5rem;
 }
 
+div.botonera-agregar {
+    align-self: center;
+}
 
-div .botonera-agregar {
-    margin-bottom: .5rem;
+div .botonera-agregar a {
+    color: white;
+    text-decoration: none;
+}
+
+div .barra-buscador {
+    display: flex;
+    justify-content: space-between;
+}
+
+div .barra-buscador input,
+div .barra-buscador label {
+    font-size: .9rem;
+}
+
+div .barra-buscador label {
     margin-right: .9rem;
+    margin-bottom: 0;
+    align-self: center;
 }
 
-div .botonera-comun input {
-margin-right: .3rem;
+div .barra-buscador input {
+    margin-right: .3rem;
+    margin-bottom: 0;
+    align-self: center;
 }
 
 table {
    font-size: .9rem !important;
    
+}
+
+table tr.verdeClaro {
+    background-color: lightgreen;
 }
 
 table td {
@@ -129,7 +175,6 @@ table td.botoneraTabla {
 table td.botoneraTabla a {
     margin-right:.3rem;
 }
-
 
 /* Formulario Crear/Editar Internacion */
 

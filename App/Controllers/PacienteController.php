@@ -16,8 +16,11 @@ class PacienteController extends BaseController
         $pacientes = Paciente::where('activo', '=', 1)->get();
 
 
+
+
         return $this->renderHTML('paciente/pacientes.twig', [
-            'pacientes' => $pacientes
+            'pacientes' => $pacientes,
+            'userName' => $_SESSION['userName']
         ]);
     }
 

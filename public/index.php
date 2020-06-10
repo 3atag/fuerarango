@@ -18,10 +18,10 @@
 
     $capsule->addConnection([
         'driver'    => 'mysql',
-        'host'      => getenv('DB_HOST'),
-        'database'  => getenv('DB_NAME'),
-        'username'  => getenv('DB_USER'),
-        'password'  => getenv('DB_PASS'),
+        'host'      => $_ENV['DB_HOST'],
+        'database'  => $_ENV['DB_NAME'],
+        'username'  => $_ENV['DB_USER'],
+        'password'  => $_ENV['DB_PASS'],
         'charset'   => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix'    => '',

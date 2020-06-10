@@ -14,7 +14,6 @@ class PracticaController extends BaseController
 
         return $this->renderHTML('practica/practicas.twig', [
             'practicas' => $practicas,
-            'base_url' => $this->base_url
         ]);
     }
 

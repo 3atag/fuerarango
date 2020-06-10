@@ -4,35 +4,54 @@
 
 <div class="contenido">
 
-    <div class="row comandos">
+    <div class="migas">
 
-        <div class="col-6 botonera-agregar">
-            <a href="internaciones/nueva">
-                <i class="fas fa-plus-circle fa-2x"></i>
-            </a>
-        </div>
+            <nav class="nav-migas" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Internaciones</li>
+                </ol>
+            </nav>
+
 
         <div class="col botonera">
-            <a href="pacientes">
-                <i class="fas fa-user-circle fa-2x"></i>
-            </a>
+            <div>
+                <button type="button" class="btn btn-outline-secondary btn-sm"><a href="pacientes">Pacientes</a></button>
 
-            <a href="practicas">
-                <i class="fas fa-cog fa-2x"></i></i></i>
-            </a>
+                <button type="button" class="btn btn-outline-secondary btn-sm"><a href="pacientes">Prácticas</a></button>
+            </div>
+
+
+
+
         </div>
+    </div>
+
+    <div class="row comandos">
+
+        <div class="col-1 botonera-agregar">
+            <button type="button" class="btn btn-primary btn-sm"><a href="internaciones/nueva">Nueva</a></button>
+        </div>
+
+        <div class="col barra-buscador">
+            <label for="">Buscar</label>
+            <input type="text" class="form-control buscador" id="intFindBeneficio" placeholder="Beneficio">
+            <input type="text" class="form-control buscador" id="intFindName" placeholder="Nombre">
+            <input type="text" class="form-control buscador" id="intFindDocumento" placeholder="Documento">
+        </div>
+
 
     </div>
 
     <div class="row">
         <div class="col">
   
-            <table class="table table-hover table-sm tablaClasica">
+            <table class="table table-hover table-sm tablaClasica" id="allInternaciones">
 
             <thead>
                     <tr>
                         <th>Beneficio</th>
                         <th>Nombre</th>
+                        <th>Documento</th>
                         <th>Ingreso</th>
                         <th>Egreso</th>
                         <th></th>
@@ -48,11 +67,10 @@
                     <tr>
                         <td>{{internacion.beneficio}}</td>
                         <td>{{internacion.nombre}}</td>
-                        <td>{{internacion.fechaIngreso|date("d/m/Y | H:i") }}</td>
-                        <td>{{internacion.fechaEgreso|date("d/m/Y | H:i")}}</td>
-                        <td class="botoneraTabla"><a href='internaciones/edit/{{internacion.id}}' class="btn btn-primary btn-sm" role="button"><i class="fas fa-pencil-alt"></i></a>
-                        <a href='#' class="btn btn-danger btn-sm" role="button"><i class="fas fa-trash-alt"></i></a></td>
-                        
+                        <td>{{internacion.dni}}</td>
+                        <td>{{internacion.fechaIngreso|date("d/m/Y") }} <span class="badge badge-secondary">{{internacion.fechaIngreso|date("H:i") }}</span></td>
+                        <td>{{internacion.fechaEgreso|date("d/m/Y")}} <span class="badge badge-secondary">{{internacion.fechaEgreso|date("H:i")}}</span></td>
+                        <td class="botoneraTabla"><a href='internaciones/edit/{{internacion.id}}' class="btn btn-outline-secondary btn-sm" role="button"><i class="fas fa-ellipsis-h"></i></a>
 
                     </tr>
 
@@ -65,6 +83,12 @@
     </div>
 
 </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script src="/js/internaciones.js"></script>
 
 {% endblock %}
 

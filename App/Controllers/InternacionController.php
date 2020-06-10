@@ -16,7 +16,7 @@ class InternacionController extends BaseController
     public function getAllInternacionAction()
     {
 
-        $internaciones = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
+        $internaciones = Internacion::select('pacientes.beneficio', 'pacientes.nombre', 'pacientes.dni', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
             ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.id')
             ->get();
 
@@ -33,9 +33,19 @@ class InternacionController extends BaseController
     {
         $pacientes = Paciente::all();
 
+        $activado = 1;
+
+        $pacientesActivos = function (array $paciente) {
+            return $paciente['activo'] == 1;
+        };
+
+        $pacientes = array_filter($pacientes->toArray(), $pacientesActivos);
+
         return $this->renderHTML('internacion/crear.twig', [
             'pacientes' => $pacientes
         ]);
+
+
     }
 
 
@@ -44,7 +54,7 @@ class InternacionController extends BaseController
     {
         $pacientes = Paciente::all();
 
-        $responseMessage  = null;
+        $responseMessage = null;
 
         $hoy = date_create();
         $fechaActual = date_timestamp_get($hoy);
@@ -172,7 +182,7 @@ class InternacionController extends BaseController
         if ($request->getMethod() == 'GET') {
 
             // Recibo parametros desde la url
-            $id = (int) $request->getAttribute('id');
+            $id = (int)$request->getAttribute('id');
 
             $internacion = Internacion::select('pacientes.id', 'pacientes.beneficio', 'pacientes.nombre', 'internaciones.id', 'internaciones.fechaIngreso', 'internaciones.fechaEgreso')
                 ->join('pacientes', 'internaciones.idDePaciente', '=', 'pacientes.id')
@@ -188,7 +198,6 @@ class InternacionController extends BaseController
                 return $this->renderHTML('internacion/crear.twig', [
 
                     'internacion' => $internacion,
-                    'base_url' => $this->base_url,
                     'isEdit' => true
                 ]);
             }
@@ -202,7 +211,7 @@ class InternacionController extends BaseController
     public function postSaveEditInternacionAction($request)
     {
 
-        $responseMessage  = null;
+        $responseMessage = null;
 
         $hoy = date_create();
 
@@ -265,7 +274,7 @@ class InternacionController extends BaseController
                     foreach ($internacionesPaciente as $internacion) {
                         // Recorro cada una de las internaciones del paciente
 
-                        if ($internacion->id != (int) $postData['id_internacion']) {
+                        if ($internacion->id != (int)$postData['id_internacion']) {
                             // Si la internacion es DISTINTA a la que se va a editar
 
                             $fechaIngresoInternacion = strtotime($internacion['fechaIngreso']);
