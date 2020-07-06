@@ -1,3 +1,4 @@
+
 div .principal {
     display: flex;
     justify-content: center;
@@ -177,6 +178,10 @@ table td.botoneraTabla a {
 }
 
 /* Formulario Crear/Editar Internacion */
+
+form.formSolo {
+    margin-top: 1.5rem;
+}
 
 div.crear_internacion span {
     color:red;

@@ -15,7 +15,7 @@ class UsuarioController extends BaseController
     /***** Mostrar todos los registros *****/
     public function getAllUsuarioAction()
     {
-        $usuarios = Usuario::where('activo', '=', 1)->get();;
+        $usuarios = Usuario::where('activo', '=', 1)->get();
 
         return $this->renderHTML('usuario/usuarios.twig', [
             'usuarios' => $usuarios

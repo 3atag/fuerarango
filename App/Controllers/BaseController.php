@@ -19,8 +19,9 @@ class BaseController
         $loader = new \Twig\Loader\FilesystemLoader('../views/');
 
         $this->templateEngine = new \Twig\Environment($loader, [
-            'cache' => false,
-            'debug' => true
+            'debug' => true,
+            'cache' => false
+
         ]);
     }
 

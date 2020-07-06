@@ -2,21 +2,19 @@
 
 {% block content %}
 
-	<div class="crear_internacion">
+	<div class="contenido">
 
 		<div class="migas">
-			<nav aria-label="breadcrumb">
+
+			<nav class="nav-migas" aria-label="breadcrumb">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/internaciones">Internaciones</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Nueva</li>
+					<li class="breadcrumb-item active" aria-current="page">Editar</li>
 				</ol>
-
-
 			</nav>
-
 		</div>
 
-		{% set tituloAction = 'Agregar' %}
+
 		{% set formAction = 'save' %}
 		{% set submitValue = 'Siguiente' %}
 		{% set statusButtonSelectPaciente = '' %}
@@ -24,7 +22,6 @@
 
 		{% if isEdit %}
 
-			{% set tituloAction = 'Editar' %}
 			{% set formAction = 'saveEdit' %}
 			{% set submitValue = 'Modificar' %}
 			{% set statusButtonSelectPaciente = 'disabled' %}
@@ -48,9 +45,6 @@
 		{% endif %}
 
 
-		<h4>{{ tituloAction }}
-			Internacion</h4>
-
 		{% if responseMessage %}
 
 			<div class="alert alert-primary" role="alert">
@@ -61,7 +55,7 @@
 
 		{% endif %}
 
-		<form action="{{ formAction }}" method="post">
+		<form action="{{ formAction }}" class="formSolo" method="post">
 
 			<div class="form-group">
 
